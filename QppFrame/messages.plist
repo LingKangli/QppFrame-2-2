@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>msgType</key>
+		<integer>0</integer>
+		<key>content</key>
+		<string>hello.tom.</string>
+		<key>icon</key>
+		<string>1.jpg</string>
+		<key>time</key>
+		<string>前天 10:25</string>
+		<key>type</key>
+		<integer>0</integer>
+	</dict>
+	<dict>
+		<key>msgType</key>
+		<integer>0</integer>
+		<key>content</key>
+		<string>问你个严肃的事</string>
+		<key>icon</key>
+		<string>1.jpg</string>
+		<key>time</key>
+		<string>前天 10:25</string>
+		<key>type</key>
+		<integer>0</integer>
+	</dict>
+	<dict>
+		<key>msgType</key>
+		<integer>0</integer>
+		<key>content</key>
+		<string>what ? just ask...haha.</string>
+		<key>icon</key>
+		<string>icon02.png</string>
+		<key>time</key>
+		<string>昨天 20:05</string>
+		<key>type</key>
+		<integer>1</integer>
+	</dict>
+	<dict>
+		<key>msgType</key>
+		<integer>0</integer>
+		<key>content</key>
+		<string>明天是不是小暑节气？</string>
+		<key>icon</key>
+		<string>1.jpg</string>
+		<key>time</key>
+		<string>昨天 20:07</string>
+		<key>type</key>
+		<integer>0</integer>
+	</dict>
+	<dict>
+		<key>msgType</key>
+		<integer>0</integer>
+		<key>content</key>
+		<string>不是。</string>
+		<key>icon</key>
+		<string>icon02.png</string>
+		<key>time</key>
+		<string>昨天 20:07</string>
+		<key>type</key>
+		<integer>1</integer>
+	</dict>
+	<dict>
+		<key>msgType</key>
+		<integer>0</integer>
+		<key>content</key>
+		<string>那为什么网上都预报呢。</string>
+		<key>icon</key>
+		<string>1.jpg</string>
+		<key>time</key>
+		<string>昨天 20:07</string>
+		<key>type</key>
+		<integer>0</integer>
+	</dict>
+	<dict>
+		<key>msgType</key>
+		<integer>0</integer>
+		<key>content</key>
+		<string>我们网站没有报啊。</string>
+		<key>icon</key>
+		<string>icon02.png</string>
+		<key>time</key>
+		<string>昨天 20:11</string>
+		<key>type</key>
+		<integer>1</integer>
+	</dict>
+	<dict>
+		<key>msgType</key>
+		<integer>0</integer>
+		<key>content</key>
+		<string>那就不知道了。</string>
+		<key>icon</key>
+		<string>1.jpg</string>
+		<key>time</key>
+		<string>昨天 20:15</string>
+		<key>type</key>
+		<integer>0</integer>
+	</dict>
+	<dict>
+		<key>msgType</key>
+		<integer>0</integer>
+		<key>content</key>
+		<string>呃。。。</string>
+		<key>icon</key>
+		<string>icon02.png</string>
+		<key>time</key>
+		<string>昨天 20:15</string>
+		<key>type</key>
+		<integer>1</integer>
+	</dict>
+</array>
+</plist>

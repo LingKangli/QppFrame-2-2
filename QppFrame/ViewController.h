@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController{
 
+    UITextField* userName;
+    UITextField* pwdName;
+}
+
+-(BOOL)login;
 
 @end
 

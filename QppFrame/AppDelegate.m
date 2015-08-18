@@ -7,16 +7,82 @@
 //
 
 #import "AppDelegate.h"
+//main Controller
+#import "ViewController.h"
+
+//Tab Controller
+#import "TabBarViewController.h"
+#import "QppViewController.h"
+#import "AddressBookViewController.h"
+#import "FindViewController.h"
+#import "MoreViewController.h"
+
+//static AppDelegate* shareAppDel = nil;
+
 
 @interface AppDelegate ()
-
 @end
 
-@implementation AppDelegate
+static AppDelegate *shareAppDel = nil;
 
+@implementation AppDelegate
+@synthesize tabBar;
+/*
+
++ (AppDelegate *)sharedManager
+{
+    
+//    static AppDelegate* sharedAppDelegate = nil;
+//    static dispatch_once_t predicate;
+//    dispatch_once(&predicate, ^{
+//        if (self == nil) {
+//            sharedAppDelegate = [[self alloc] init];
+//        }
+//    });
+//    NSLog(@"aaaaa");
+//    return sharedAppDelegate;
+    
+    if (shareAppDel == nil) {
+        shareAppDel = [[super allocWithZone:NULL]init];
+    }
+    return shareAppDel;
+}
+*/
+
+
++(AppDelegate *)sharedManager{
+    @synchronized (self){//为了确保多线程情况下，仍然确保实体的唯一性
+        if (!shareAppDel) {
+           shareAppDel = [[self alloc] init];//非ARC模式下,该方法会调用 allocWithZone
+        }
+        return shareAppDel;
+    }
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+
+    shareAppDel = [AppDelegate sharedManager];
+//    1.创建Window
+    shareAppDel.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+    
+//    a.初始化一个tabBar控制器
+//    tabBar = [[TabBarViewController alloc]init];
+    
+    ViewController* loginVC = [[ViewController alloc]init];
+
+//    设置控制器为Window的根控制器
+    self.window.rootViewController = loginVC;
+    
+//2.设置Window为主窗口并显示出来
+    [shareAppDel.window makeKeyAndVisible];
+    
+    NSError* error1;
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error1]; [session setActive:YES error:&error1];
+    
+
+    
     return YES;
 }
 
