@@ -22,6 +22,12 @@ typedef enum {
     KeyBoradContentState_voice
 }KeyBoradContentState;//键盘状态的显示
 
+typedef enum {
+    PhotoByPhoto = 0,
+    PhotoByPVoice= 1,
+    PhotoByManyPVoice
+}PhotoType;
+
 @protocol KeyBoradContentDelegate <NSObject>
 -(void)keyBoradPicForData:(NSData*)data ForType:(DataType)dataType;
 -(void)keyBoradPicWithImg:(UIImage*)image andVoicePath:(NSURL*)filePath2;
@@ -40,7 +46,11 @@ typedef enum {
     BOOL isCreateVoice;
     BOOL isCreateEmj;
     BOOL isCreatePic;
+    
     BOOL isVoicePicker;
+    BOOL isManyVoicePicker;
+    
+    PhotoType photoUseType;
 //    UIImageView* testImg;
     
     
@@ -67,6 +77,8 @@ typedef enum {
 @property(nonatomic)KeyBoradContentState keyBoradState;
 @property(nonatomic,strong) id<KeyBoradContentDelegate> delegate;
 
+
+-(void)clearKLAlterPickerFromWindow;
 -(void)changeToState:(KeyBoradContentState)keyBoradState;
 -(void)saveGifToDocumentForData:(NSData *)data ;
 @end
