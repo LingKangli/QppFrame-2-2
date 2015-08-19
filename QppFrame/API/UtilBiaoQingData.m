@@ -52,7 +52,7 @@
     return dictArray;
 }
 
--(NSArray*)getBiaoQingIndex:(NSInteger)bQIndex{
+-(NSMutableArray*)getBiaoQingIndex:(NSInteger)bQIndex{
 
     //读取plist
     NSBundle *bundle = [NSBundle mainBundle];
@@ -67,7 +67,7 @@
     
         NSDictionary *dict = dictArray[bQIndex];
         NSString* name = [dict objectForKey:@"biaoQingName"];
-        NSArray* contentAry = [dict objectForKey:@"biaoQingContent"];
+        NSMutableArray* contentAry = [dict objectForKey:@"biaoQingContent"];
         NSLog(@"dict is %@",dict);
         NSLog(@"name is %@",name);
         NSLog(@"contentAry is %@",contentAry);

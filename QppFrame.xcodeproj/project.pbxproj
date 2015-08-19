@@ -126,6 +126,7 @@
 		83C354B91B7AE7DC00856590 /* KeyBoradBQContentFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C354B81B7AE7DC00856590 /* KeyBoradBQContentFrame.m */; };
 		83E5B2731B6B7FDC00B721EC /* chatfrom_doctor_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E5B2721B6B7FDC00B721EC /* chatfrom_doctor_icon.png */; };
 		83FA04B81B5A440500053DDB /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83FA04B71B5A440500053DDB /* AssetsLibrary.framework */; };
+		D13407FF1B8335E500E64755 /* MultChatUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = D13407FE1B8335E500E64755 /* MultChatUIView.m */; };
 		D160BEFD1B7F2C7200EBEC04 /* KLAlterPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D160BEFC1B7F2C7200EBEC04 /* KLAlterPicker.m */; };
 		E417907B1B4FD04300F68419 /* ServerConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = E417907A1B4FD04300F68419 /* ServerConnect.m */; };
 		E41790851B4FD47A00F68419 /* KeyBoradContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E417907E1B4FD47A00F68419 /* KeyBoradContentView.m */; };
@@ -394,6 +395,8 @@
 		83E5B2721B6B7FDC00B721EC /* chatfrom_doctor_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chatfrom_doctor_icon.png; path = image/QQ/chatfrom_doctor_icon.png; sourceTree = "<group>"; };
 		83EB4E2A1B7C4652003D0101 /* PictureOpr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PictureOpr.h; path = command/PictureOpr.h; sourceTree = "<group>"; };
 		83FA04B71B5A440500053DDB /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		D13407FD1B8335E500E64755 /* MultChatUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultChatUIView.h; path = page_Qpp/view/ChatItem/MultChatUIView.h; sourceTree = "<group>"; };
+		D13407FE1B8335E500E64755 /* MultChatUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultChatUIView.m; path = page_Qpp/view/ChatItem/MultChatUIView.m; sourceTree = "<group>"; };
 		D160BEFB1B7F2C7200EBEC04 /* KLAlterPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KLAlterPicker.h; path = itemView/KLAlterPicker.h; sourceTree = "<group>"; };
 		D160BEFC1B7F2C7200EBEC04 /* KLAlterPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KLAlterPicker.m; path = itemView/KLAlterPicker.m; sourceTree = "<group>"; };
 		E41790791B4FD04300F68419 /* ServerConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerConnect.h; path = API/ServerConnect.h; sourceTree = "<group>"; };
@@ -823,6 +826,8 @@
 				E417907E1B4FD47A00F68419 /* KeyBoradContentView.m */,
 				E41790811B4FD47A00F68419 /* MoveButton.h */,
 				E41790821B4FD47A00F68419 /* MoveButton.m */,
+				D13407FD1B8335E500E64755 /* MultChatUIView.h */,
+				D13407FE1B8335E500E64755 /* MultChatUIView.m */,
 			);
 			name = chatViewToolItems;
 			sourceTree = "<group>";
@@ -1725,6 +1730,7 @@
 				83780AE11B7D7C6C008992B3 /* ImgObj.m in Sources */,
 				8358F4721B54A3E80007DA22 /* XWAlterview.m in Sources */,
 				E453F41A1B340A430092DF8C /* BaseUINavigationController.m in Sources */,
+				D13407FF1B8335E500E64755 /* MultChatUIView.m in Sources */,
 				E4ED90101B3969ED00B037BB /* FriendsStoryCellTableViewCell.m in Sources */,
 				83A0EB4E1B57A8BD00920B33 /* Message.m in Sources */,
 				83569B091B56724C00359560 /* JSONKit.m in Sources */,

@@ -53,7 +53,7 @@
         _contentBtn.titleLabel.numberOfLines = 0;
         _contentBtn.layer.cornerRadius = 2.0;
 //        [_contentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-
+        [_contentBtn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_contentBtn];
         
         contentVoiceIsPlaying = NO;
@@ -61,6 +61,12 @@
     }
     return self;
 }
+
+-(void)click:(id)sender{
+
+    NSLog(@"the test is click.");
+}
+
 
 - (void)setMessageFrame:(MessageFrame *)messageFrame{
     

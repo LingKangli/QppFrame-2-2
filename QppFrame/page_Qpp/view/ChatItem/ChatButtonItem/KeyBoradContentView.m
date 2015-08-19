@@ -15,7 +15,7 @@
 #import "VoiceObj.h"
 
 #import "XWAlterview.h"
-
+#import "ChatMultiViewController.h"
 
 #define verticalCount 2    //垂直2行
 #define horizontalCount 4  //水平4行
@@ -357,10 +357,6 @@
 -(void)addPicKeyBoradView{
 
     [self viewClear:frameView];
-//    for(int i = 0;i<[frameView.subviews count];i++){
-//        [[frameView.subviews objectAtIndex:i]removeFromSuperview] ;
-//    }
-    
     for (int i = 0; i < 4; i++) {
         PicViewItem* item = [[PicViewItem alloc]initWithFrame:CGRectMake(10+(10+80)*i, 5, 80, 80)];
         switch (i) {
@@ -368,7 +364,6 @@
                 item.itemLab.text = @"Album" ;
                 item.tag  = i;
                 item.itemView.image = [UIImage imageNamed:@"face@2x.png"];
-                
                 break;
             case 1:
                 item.itemLab.text = @"Camera" ;
@@ -396,12 +391,8 @@
 
     frameView.backgroundColor = [UIColor greenColor];
     [self addSubview:frameView];
- 
-//    testImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 90, 80, 80)];
-//    testImg.backgroundColor = [UIColor yellowColor];
-//    [frameView addSubview:testImg];
-
 }
+
 -(void)addVoiceImgFrom:(UIImage*)img{
     
     [self viewClear:frameView];
@@ -436,6 +427,17 @@
             [imgView removeFromSuperview];
         }
     }
+    
+    for(id tmpView in [[[UIApplication sharedApplication] keyWindow] subviews])
+    {
+        //找到要删除的子视图的对象
+        if([tmpView isKindOfClass:[KLAlterPicker class]])
+        {
+            UIImageView *imgView = (UIImageView *)tmpView;
+            [imgView removeFromSuperview]; //删除子视图
+        }
+    }
+
 }
 
 -(void)picClick:(id)sender{
@@ -445,7 +447,9 @@
     switch (((PicViewItem*)sender).tag) {
         case  0:{
             UIImagePickerController* imagePicker = [[UIImagePickerController alloc]init];
-            isVoicePicker = NO;
+//            isVoicePicker = NO;
+//            isManyVoicePicker = NO;
+            photoUseType = PhotoByPhoto;
             imagePicker.delegate = self;
             imagePicker.allowsEditing = YES; //图片可编辑
             //            需要添加委托
@@ -456,7 +460,10 @@
             break;
         case  1:{
             UIImagePickerController* imagePicker = [[UIImagePickerController alloc]init];
-            isVoicePicker = NO;
+//            isVoicePicker = NO;
+//            isManyVoicePicker = NO;
+            photoUseType = PhotoByPhoto;
+
             imagePicker.delegate = self;
             imagePicker.allowsEditing = YES; //图片可编辑
             if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -468,19 +475,35 @@
         }
             break;
         case  2:{
-       
+//            isManyVoicePicker = NO;
+            photoUseType = PhotoByPVoice;
             KLAlterPicker* k = [[KLAlterPicker  alloc]initWithDirection:directionTypeMid WithButtonNum:2 WithStly:AlterStlyDefult];
             k.delegate = self;
             [[[UIApplication sharedApplication] keyWindow] addSubview:k];
         }
             break;
-            
+        case  3:{
+            UIImagePickerController* imagePicker = [[UIImagePickerController alloc]init];
+//            isVoicePicker = NO;
+//            isManyVoicePicker = YES;
+            photoUseType = PhotoByManyPVoice;
+            imagePicker.delegate = self;
+            imagePicker.allowsEditing = YES; //图片可编辑
+            //            需要添加委托
+            //            [self p];
+            [[self getTheViewController] presentModalViewController:imagePicker animated:YES];
+        }
+            break;
         default:
             break;
     }
     
 }
+-(void)clearKLAlterPickerFromWindow{
+    
+  }
 
+//Delegate
 -(void)clickTheBtn:(UIButton *)btn{
 
     NSLog(@"the test is %i",btn.tag);
@@ -528,7 +551,7 @@
 //成功获得相片还是视频后的回调
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
 
-    
+    /*
     NSLog(@"the info is %@",info);
     
     if (!isVoicePicker) {
@@ -549,6 +572,49 @@
         [self addVoiceImgFrom:orgImage];
         [picker dismissViewControllerAnimated:YES completion:nil];
 
+    }
+     */
+    
+    switch (photoUseType) {
+        case PhotoByPhoto:{
+            UIImage *orgImage = info[UIImagePickerControllerOriginalImage];
+            //        lingkanglitest
+            NSData* data = UIImageJPEGRepresentation(orgImage, 1.0);
+            [self.delegate keyBoradPicForData:data ForType:DataTypeImg];
+            [picker dismissViewControllerAnimated:YES completion:nil];
+        }
+            break;
+            
+        case PhotoByPVoice:{
+            //依次遍历self.view中的所有子视图
+            UIImage *orgImage = info[UIImagePickerControllerOriginalImage];
+            [self addVoiceImgFrom:orgImage];
+            [picker dismissViewControllerAnimated:YES completion:nil];
+        }
+            break;
+            
+        case PhotoByManyPVoice:{
+            UIImage *orgImage = info[UIImagePickerControllerOriginalImage];
+            //        lingkanglitest
+            NSData* data = UIImageJPEGRepresentation(orgImage, 1.0);
+//            [self.delegate keyBoradPicForData:data ForType:DataTypeImg];
+            
+//            ChatMultiViewController  *cMVC = [[ChatMultiViewController alloc]init];
+//            [[self getTheViewController] presentModalViewController:cMVC animated:YES];
+            
+            UIView* imageView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UIScreenWidth, UIScreenHeight)];
+            imageView.backgroundColor = [UIColor greenColor];
+            [[[UIApplication sharedApplication] keyWindow]  addSubview:imageView];
+            
+            
+            [picker dismissViewControllerAnimated:YES completion:nil];
+            
+            
+        }
+            break;
+            
+        default:
+            break;
     }
 }
 

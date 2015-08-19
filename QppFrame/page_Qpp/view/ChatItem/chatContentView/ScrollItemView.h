@@ -44,7 +44,7 @@ typedef enum  {
 
 -(instancetype)initWithFrame:(CGRect)frame WithHCount:(NSInteger) hCount WithVCount:(NSInteger) vCount WithTypeName:(NSInteger*)biaoQingTypeIndex;
 
--(instancetype)initWithFrame:(CGRect)frame WithTypesIndex:(NSInteger*)biaoQingTypeIndex;
+-(instancetype)initWithFrame:(CGRect)frame WithTypesIndex:(NSInteger)biaoQingTypeIndex;
 
 -(void)setbQItemType:(BiaoQingItemType)bQItemType;
 -(BiaoQingItemType)getbQItemType;

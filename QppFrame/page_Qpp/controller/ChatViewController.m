@@ -263,7 +263,7 @@
     }
       cell.messageFrame = _allMessagesFrame[indexPath.row];
 
-    NSLog(@"messageFrame:%@",((MessageFrame*)_allMessagesFrame[indexPath.row]).message.image);
+//    NSLog(@"messageFrame:%@",((MessageFrame*)_allMessagesFrame[indexPath.row]).message.image);
     return cell;
     
 }
@@ -325,6 +325,7 @@
     
     [_allMessagesFrame addObject:mf];
 }
+
 //img by add
 - (void)addMessageWithImg:(NSString *)content time:(NSString *)time{
     
@@ -341,9 +342,8 @@
     [_allMessagesFrame addObject:mf];
     NSLog(@"mf:%@",_allMessagesFrame);
 }
+
 //voiceImgMsg by add
-
-
 - (void)addMessageWithImg:(NSString *)content andVoice:(NSURL*)voicePath time:(NSString *)time{
     
     NSLog(@"test content:%@",content);
@@ -399,13 +399,9 @@
     NSLog(@"message is :%@",mf.message.content);
     [_allMessagesFrame addObject:mf];
     NSLog(@"mf:%@",_allMessagesFrame);
-    
-    
-    
 }
 
 #pragma chatContentTableView end
-
 
 #pragma gesture (触摸取消键盘)
 //隐藏键盘的方法
@@ -472,6 +468,7 @@
 //    -(void)changeImg:(ButtonState)keyBoradState;
     [keyBorad changeImg:button_state_none
      ];
+//    [keyBorad cl];
 }
 
 

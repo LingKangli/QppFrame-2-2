@@ -94,12 +94,12 @@
 }
 
 
--(instancetype)initWithFrame:(CGRect)frame WithTypesIndex:(NSInteger*)biaoQingTypeIndex{
+-(instancetype)initWithFrame:(CGRect)frame WithTypesIndex:(NSInteger)biaoQingTypeIndex{
 
     self = [super initWithFrame:frame];
     if (self) {
        
-        NSLog(@"sumCount is %i ",sumCount);
+//        NSLog(@"sumCount is %i ",sumCount);
 
         biaoQingArray = [[UtilBiaoQingData shareUtil]getBiaoQingIndex:biaoQingTypeIndex];
         NSLog(@"biaoQing is %@",biaoQingArray);
