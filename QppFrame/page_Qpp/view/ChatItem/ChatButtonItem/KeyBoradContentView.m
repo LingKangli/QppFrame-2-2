@@ -15,7 +15,7 @@
 #import "VoiceObj.h"
 
 #import "XWAlterview.h"
-#import "ChatMultiViewController.h"
+//#import "ChatMultiViewController.h"
 
 #define verticalCount 2    //垂直2行
 #define horizontalCount 4  //水平4行
