@@ -186,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QppFrame/page_Qpp/view/ChatItem/ChatButtonItem/voiceObj/VoiceObj.m"
-            timestampString = "461489458.556613"
+            timestampString = "461659484.30303"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "242"
-            endingLineNumber = "242"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
             landmarkName = "-stopRecordVoice"
             landmarkType = "5">
          </BreakpointContent>
@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QppFrame/page_Qpp/view/ChatItem/ChatButtonItem/voiceObj/VoiceObj.m"
-            timestampString = "461489460.189309"
+            timestampString = "461659484.30303"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
             landmarkName = "-stopRecordVoice"
             landmarkType = "5">
          </BreakpointContent>

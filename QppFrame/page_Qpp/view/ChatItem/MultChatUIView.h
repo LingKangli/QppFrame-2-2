@@ -7,9 +7,33 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MultChatObj.h"
+#import "VoiceObj.h"
+#import "UUAVAudioPlayer.h"
+#import "MultChatPlayer.h"
 
-@interface MultChatUIView : UIView
+@protocol MultChatViewDelegate <NSObject>
 
--(instancetype)initWithFrame:(CGRect)frame;
+@optional
+-(void)backFontPage:(MultChatObj*)multChO;
+
+@end
+
+@interface MultChatUIView : UIControl
+<VoiceDelegate>{
+
+//    MultChatObj* chatObj;//存放需要传到前一页面的数据《图片，Ｎ个ＵＲＬ，Ｎ个坐标》
+//
+    UIImageView* chatBGImg;//背景图片
+    UIImageView* voiceImg;
+    NSURL* currentUrl ;//长按后录音路径
+    NSTimer* timer;
+    AVAudioRecorder* _recorder;
+   
+    MultChatObj* thisPageData;
+}
+
+@property(nonatomic)UIImage* backgroundImg;
+@property(nonatomic)id<MultChatViewDelegate>delegate;
 
 @end

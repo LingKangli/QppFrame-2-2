@@ -15,7 +15,7 @@
 #import "VoiceObj.h"
 
 #import "XWAlterview.h"
-//#import "ChatMultiViewController.h"
+#import "MultChatUIView.h"
 
 #define verticalCount 2    //垂直2行
 #define horizontalCount 4  //水平4行
@@ -602,11 +602,11 @@
 //            ChatMultiViewController  *cMVC = [[ChatMultiViewController alloc]init];
 //            [[self getTheViewController] presentModalViewController:cMVC animated:YES];
             
-            UIView* imageView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UIScreenWidth, UIScreenHeight)];
-            imageView.backgroundColor = [UIColor greenColor];
+            
+            MultChatUIView* imageView = [[MultChatUIView alloc]initWithFrame:CGRectMake(0, 0, UIScreenWidth, UIScreenHeight)];
+            imageView.delegate = self;
+            imageView.backgroundImg = orgImage;
             [[[UIApplication sharedApplication] keyWindow]  addSubview:imageView];
-            
-            
             [picker dismissViewControllerAnimated:YES completion:nil];
             
             
@@ -617,6 +617,8 @@
             break;
     }
 }
+
+
 
 //取消照相机的回调
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{

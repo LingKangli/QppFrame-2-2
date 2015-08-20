@@ -31,7 +31,7 @@
 //    UIImageView* imgView ;
     
     double cTime;
-    NSURL* fileUrl;
+    NSURL* _fileUrl;
 }
 
 @property(strong,nonatomic)  AVAudioRecorder *recorder;
@@ -45,5 +45,7 @@
 
 @property (nonatomic,strong)UIImage* imgNormal;
 
+@property(nonatomic)CGPoint point;
+@property(nonatomic)NSURL* fileUrl;
 
 @end

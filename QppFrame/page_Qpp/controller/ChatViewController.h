@@ -19,7 +19,7 @@
 #import "MessageFrame.h"
 #import "MessageCell.h"
 
-
+#import "MultChatUIView.h"
 
 @interface ChatViewController : BaseUIViewController<UITextFieldDelegate,UITextViewDelegate,UITableViewDataSource,UITableViewDelegate,KeyBoradContentDelegate,testDelegate,keyBoradDelegate,VoiceDelegate,AVAudioPlayerDelegate,playerDelegate>{
 

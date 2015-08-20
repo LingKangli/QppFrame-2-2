@@ -20,6 +20,7 @@
 @interface UUAVAudioPlayer : NSObject
 @property (nonatomic ,strong)  AVAudioPlayer *player;
 @property (nonatomic, assign)id <UUAVAudioPlayerDelegate>delegate;
+@property (nonatomic)UIImage* img;
 + (UUAVAudioPlayer *)sharedInstance;
 
 -(void)playSongWithUrl:(NSURL *)songUrl;

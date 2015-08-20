@@ -15,6 +15,8 @@
 @synthesize recorder = _recorder;
 @synthesize delegate = _delegate;
 @synthesize imgView = _imgView;
+@synthesize point;
+@synthesize fileUrl = _fileUrl;
 //@synthesize url = _url;
 
 -(instancetype)initWithFrame:(CGRect)frame{
@@ -27,6 +29,9 @@
 }
 
 -(void)initial:(CGRect)frame{
+    
+    self.backgroundColor = [UIColor greenColor];
+    
     _recorderBtn = [[GifImageButton alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
     _recorderBtn.layer.borderWidth = 1.0;
     _recorderBtn.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -41,13 +46,10 @@
 
     [self addSubview:_recorderBtn];
 
-    [self setRecorder];
     
 //    timer = [NSTimer  timerWithTimeInterval:0 target:self selector:@selector(detectionVoice)userInfo:nil repeats:YES];
 
     _imgView = [[UIImageView alloc]initWithFrame:voiceFrame];
-
-    
 //
 }
 
@@ -75,6 +77,7 @@
     
     NSLog(@"the file in : %@",file);
     NSURL* url = [NSURL fileURLWithPath:file];
+    _fileUrl = url;
     
     //录音设置
     NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc]init] ;
@@ -123,6 +126,8 @@
 
 -(void)btnDown:(id)sender{
    
+    [self setRecorder];
+
     if ([_recorder prepareToRecord]) {
         //开始
         [_recorder record];
@@ -134,8 +139,6 @@
     
     [[NSRunLoop  currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
     
-    
-
 //    [self beginCountTime];
 //    [self beginRecordVoice];
     /*
@@ -370,5 +373,6 @@
 
     NSLog(@"test////");
 }
+
 
 @end

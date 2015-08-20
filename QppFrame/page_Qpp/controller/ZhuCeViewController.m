@@ -68,6 +68,10 @@
     userName.font = [UIFont systemFontOfSize:18];
     userName.placeholder = @"请输入您的注册邮箱";
     userName.delegate = self;
+    userName.keyboardType = UIKeyboardTypeEmailAddress;
+//    userName.keyboardType = UIKeyboardTypeEmailAddress;
+
+    userName.returnKeyType = UIReturnKeyDone;
     [userBG addSubview:userName];
 
 //UIImageView的userInteractionEnabled为YES,
@@ -80,6 +84,8 @@
     pwdName = [[UITextField alloc]initWithFrame:CGRectMake(60, 3, UIScreenWidth-115, 40)];
     pwdName.placeholder = @"请输入您的密码";
     pwdName.delegate = self;
+    pwdName.returnKeyType = UIReturnKeyDone;
+    pwdName.secureTextEntry = YES;
     [pwdBG addSubview:pwdName];
     
     UIImageView* pwdAgainBG = [[UIImageView alloc]initWithFrame:CGRectMake(20, pwdBG.frame.origin.y+pwdBG.frame.size.height+10, UIScreenWidth-40, 40)];
@@ -90,12 +96,16 @@
     pwdAgainName = [[UITextField alloc]initWithFrame:CGRectMake(60, 3, UIScreenWidth-115, 40)];
     pwdAgainName.placeholder = @"请再次输入您的密码";
     pwdAgainName.delegate = self;
+    pwdAgainName.secureTextEntry = YES;
+
+    pwdAgainName.returnKeyType = UIReturnKeyDone;
+    pwdAgainName.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
     [pwdAgainBG addSubview:pwdAgainName];
     
     //指定编辑时键盘的return键类型
-    userName.returnKeyType = UIReturnKeyNext;
-    pwdName.returnKeyType = UIReturnKeyDefault;
-    pwdAgainName.returnKeyType = UIReturnKeyDefault;
+//    userName.returnKeyType = UIReturnKeyNext;
+//    pwdName.returnKeyType = UIReturnKeyDefault;
+//    pwdAgainName.returnKeyType = UIReturnKeyDefault;
     
     //注册键盘响应事件方法
     [userName addTarget:self action:@selector(nextOnKeyboard:) forControlEvents:UIControlEventEditingDidEndOnExit];

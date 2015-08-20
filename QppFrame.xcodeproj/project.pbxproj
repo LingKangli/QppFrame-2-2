@@ -127,6 +127,9 @@
 		83E5B2731B6B7FDC00B721EC /* chatfrom_doctor_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E5B2721B6B7FDC00B721EC /* chatfrom_doctor_icon.png */; };
 		83FA04B81B5A440500053DDB /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83FA04B71B5A440500053DDB /* AssetsLibrary.framework */; };
 		D13407FF1B8335E500E64755 /* MultChatUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = D13407FE1B8335E500E64755 /* MultChatUIView.m */; };
+		D150BC371B8420D0000FA9B3 /* MultChatObj.m in Sources */ = {isa = PBXBuildFile; fileRef = D150BC361B8420D0000FA9B3 /* MultChatObj.m */; };
+		D150BC391B842985000FA9B3 /* myVoice.png in Resources */ = {isa = PBXBuildFile; fileRef = D150BC381B842985000FA9B3 /* myVoice.png */; };
+		D150BC3C1B84699A000FA9B3 /* MultChatPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D150BC3B1B84699A000FA9B3 /* MultChatPlayer.m */; };
 		D160BEFD1B7F2C7200EBEC04 /* KLAlterPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D160BEFC1B7F2C7200EBEC04 /* KLAlterPicker.m */; };
 		E417907B1B4FD04300F68419 /* ServerConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = E417907A1B4FD04300F68419 /* ServerConnect.m */; };
 		E41790851B4FD47A00F68419 /* KeyBoradContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E417907E1B4FD47A00F68419 /* KeyBoradContentView.m */; };
@@ -395,8 +398,13 @@
 		83E5B2721B6B7FDC00B721EC /* chatfrom_doctor_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chatfrom_doctor_icon.png; path = image/QQ/chatfrom_doctor_icon.png; sourceTree = "<group>"; };
 		83EB4E2A1B7C4652003D0101 /* PictureOpr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PictureOpr.h; path = command/PictureOpr.h; sourceTree = "<group>"; };
 		83FA04B71B5A440500053DDB /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
-		D13407FD1B8335E500E64755 /* MultChatUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultChatUIView.h; path = page_Qpp/view/ChatItem/MultChatUIView.h; sourceTree = "<group>"; };
-		D13407FE1B8335E500E64755 /* MultChatUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultChatUIView.m; path = page_Qpp/view/ChatItem/MultChatUIView.m; sourceTree = "<group>"; };
+		D13407FD1B8335E500E64755 /* MultChatUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultChatUIView.h; path = ../MultChatUIView.h; sourceTree = "<group>"; };
+		D13407FE1B8335E500E64755 /* MultChatUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultChatUIView.m; path = ../MultChatUIView.m; sourceTree = "<group>"; };
+		D150BC351B8420D0000FA9B3 /* MultChatObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultChatObj.h; path = QppFrame/page_Qpp/view/ChatItem/MultChatObj.h; sourceTree = SOURCE_ROOT; };
+		D150BC361B8420D0000FA9B3 /* MultChatObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultChatObj.m; path = QppFrame/page_Qpp/view/ChatItem/MultChatObj.m; sourceTree = SOURCE_ROOT; };
+		D150BC381B842985000FA9B3 /* myVoice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = myVoice.png; path = image/QQ/myVoice.png; sourceTree = "<group>"; };
+		D150BC3A1B84699A000FA9B3 /* MultChatPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultChatPlayer.h; path = QppFrame/page_Qpp/view/ChatItem/MultChatPlayer.h; sourceTree = SOURCE_ROOT; };
+		D150BC3B1B84699A000FA9B3 /* MultChatPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultChatPlayer.m; path = QppFrame/page_Qpp/view/ChatItem/MultChatPlayer.m; sourceTree = SOURCE_ROOT; };
 		D160BEFB1B7F2C7200EBEC04 /* KLAlterPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KLAlterPicker.h; path = itemView/KLAlterPicker.h; sourceTree = "<group>"; };
 		D160BEFC1B7F2C7200EBEC04 /* KLAlterPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KLAlterPicker.m; path = itemView/KLAlterPicker.m; sourceTree = "<group>"; };
 		E41790791B4FD04300F68419 /* ServerConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerConnect.h; path = API/ServerConnect.h; sourceTree = "<group>"; };
@@ -707,11 +715,11 @@
 		835BC8631B7490270038E5A0 /* chatContentView */ = {
 			isa = PBXGroup;
 			children = (
+				D150BC3D1B847DCD000FA9B3 /* multChatUIView */,
+				D150BC341B841254000FA9B3 /* AllBiaoQingFrame */,
 				83780AE31B7D8B24008992B3 /* addPicContent */,
 				83780AE21B7D8ADC008992B3 /* biaoQingButton */,
 				835BC8641B7490270038E5A0 /* bottomButton */,
-				835BC8671B7490270038E5A0 /* ScrollItemView.h */,
-				835BC8681B7490270038E5A0 /* ScrollItemView.m */,
 			);
 			name = chatContentView;
 			path = page_Qpp/view/ChatItem/chatContentView;
@@ -814,6 +822,28 @@
 			name = chatContent;
 			sourceTree = "<group>";
 		};
+		D150BC341B841254000FA9B3 /* AllBiaoQingFrame */ = {
+			isa = PBXGroup;
+			children = (
+				835BC8671B7490270038E5A0 /* ScrollItemView.h */,
+				835BC8681B7490270038E5A0 /* ScrollItemView.m */,
+			);
+			name = AllBiaoQingFrame;
+			sourceTree = "<group>";
+		};
+		D150BC3D1B847DCD000FA9B3 /* multChatUIView */ = {
+			isa = PBXGroup;
+			children = (
+				D13407FD1B8335E500E64755 /* MultChatUIView.h */,
+				D13407FE1B8335E500E64755 /* MultChatUIView.m */,
+				D150BC351B8420D0000FA9B3 /* MultChatObj.h */,
+				D150BC361B8420D0000FA9B3 /* MultChatObj.m */,
+				D150BC3A1B84699A000FA9B3 /* MultChatPlayer.h */,
+				D150BC3B1B84699A000FA9B3 /* MultChatPlayer.m */,
+			);
+			name = multChatUIView;
+			sourceTree = "<group>";
+		};
 		E417907C1B4FD34600F68419 /* chatViewToolItems */ = {
 			isa = PBXGroup;
 			children = (
@@ -826,8 +856,6 @@
 				E417907E1B4FD47A00F68419 /* KeyBoradContentView.m */,
 				E41790811B4FD47A00F68419 /* MoveButton.h */,
 				E41790821B4FD47A00F68419 /* MoveButton.m */,
-				D13407FD1B8335E500E64755 /* MultChatUIView.h */,
-				D13407FE1B8335E500E64755 /* MultChatUIView.m */,
 			);
 			name = chatViewToolItems;
 			sourceTree = "<group>";
@@ -924,6 +952,7 @@
 		E453F3BF1B33AE780092DF8C /* image */ = {
 			isa = PBXGroup;
 			children = (
+				D150BC381B842985000FA9B3 /* myVoice.png */,
 				835BC7DE1B748E510038E5A0 /* imagecontent */,
 				83E5B2721B6B7FDC00B721EC /* chatfrom_doctor_icon.png */,
 				83A0EB5A1B57B13E00920B33 /* Qq */,
@@ -1536,6 +1565,7 @@
 				835BC83A1B748E510038E5A0 /* Nipic_9802588_20120411105129212000.gif in Resources */,
 				835BC8611B748E510038E5A0 /* 20088810141748.gif in Resources */,
 				E4C2E0331B3AB2F100BEB9FC /* biaoQingImg6.png in Resources */,
+				D150BC391B842985000FA9B3 /* myVoice.png in Resources */,
 				83E5B2731B6B7FDC00B721EC /* chatfrom_doctor_icon.png in Resources */,
 				E4C2E0341B3AB2F100BEB9FC /* biaoQingImg7.jpg in Resources */,
 				E453F4051B33ED4F0092DF8C /* 3.jpg in Resources */,
@@ -1698,6 +1728,7 @@
 				E453F3D81B33C6FF0092DF8C /* MoreViewController.m in Sources */,
 				E43FA94F1B32537400C8352D /* AppDelegate.m in Sources */,
 				E453F3D51B33C6E90092DF8C /* FindViewController.m in Sources */,
+				D150BC3C1B84699A000FA9B3 /* MultChatPlayer.m in Sources */,
 				E453F3DB1B33C7250092DF8C /* QppViewController.m in Sources */,
 				E4C2DFFC1B3A997000BEB9FC /* PersonCenterView.m in Sources */,
 				E4C2DFD81B3A395000BEB9FC /* TitleView.m in Sources */,
@@ -1735,6 +1766,7 @@
 				83A0EB4E1B57A8BD00920B33 /* Message.m in Sources */,
 				83569B091B56724C00359560 /* JSONKit.m in Sources */,
 				E4C2DFF51B3A96AF00BEB9FC /* PersonCenterController.m in Sources */,
+				D150BC371B8420D0000FA9B3 /* MultChatObj.m in Sources */,
 				83337C501B539B3500312E0C /* PicViewItem.m in Sources */,
 				E4CF3EB91B3EA243007F71CB /* FriendStoryItem.m in Sources */,
 				835BC86A1B7490270038E5A0 /* ScrollItemView.m in Sources */,

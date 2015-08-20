@@ -15,6 +15,7 @@
 @end
 
 @implementation UUAVAudioPlayer
+@synthesize img = _img;
 
 + (UUAVAudioPlayer *)sharedInstance
 {

@@ -12,7 +12,7 @@
 #import "UtilBiaoQingData.h"
 #import "ScrollItemView.h"
 #import "KLAlterPicker.h"
-
+#import "MultChatUIView.h"
 
 
 typedef enum {
@@ -36,7 +36,7 @@ typedef enum {
 -(void)keyBoradPic:(NSString *)filePath andVoicePath:(NSURL*) voicePath;
 @end
 
-@interface KeyBoradContentView : UIView<UIImagePickerControllerDelegate,UINavigationBarDelegate,VoiceDelegate,DynamicScrollViewCilckDelegate,UIScrollViewDelegate,KeyBoradContentDelegate,KLAlertPickerDelegate>{
+@interface KeyBoradContentView : UIView<UIImagePickerControllerDelegate,UINavigationBarDelegate,VoiceDelegate,DynamicScrollViewCilckDelegate,UIScrollViewDelegate,KeyBoradContentDelegate,KLAlertPickerDelegate,MultChatViewDelegate>{
 
     CGRect showViewFrame;//
     
