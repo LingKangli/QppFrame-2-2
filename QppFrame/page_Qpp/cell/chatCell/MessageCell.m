@@ -21,6 +21,7 @@
     GifImageButton    *_contentBtn;
     UIButton   *_voiceBtn;
     
+    Message* message;
 }
 
 @end
@@ -71,7 +72,8 @@
 - (void)setMessageFrame:(MessageFrame *)messageFrame{
     
     _messageFrame = messageFrame;
-    Message *message = _messageFrame.message;
+//    Message *
+    message = _messageFrame.message;
     
     // 1、设置时间
     [_timeBtn setTitle:message.time forState:UIControlStateNormal];
@@ -103,12 +105,54 @@
             break;
         case MessageShowTypeImgVoiceByUIIMG:
             [self setVoiceImageByUIIMG:message];
+            break;
+        case MessageShowTypeMultChatImg:
+            [self setMultChatImg:message];
+            break;
         default:
             break;
     }
  
 }
 
+-(void)setMultChatImg:(Message*)messageOBj{
+
+    _voiceBtn = [[UIButton alloc]init];
+    _voiceBtn.frame = _messageFrame.voiceF;
+    [_voiceBtn setImage:[UIImage imageNamed:@"myVoice.png"] forState:UIControlStateNormal];
+    [_voiceBtn addTarget:self action:@selector(voiceBtn1:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:_voiceBtn];
+    contentVoiceIsPlaying = YES;
+    audio = [UUAVAudioPlayer sharedInstance];
+    
+    //    if ([[[UtilBiaoQingData shareUtil]getBiaoQingType:message.content]  isEqualToString:BQPNG]) {
+    //        [_contentBtn setImage:[UIImage imageNamed:message.content] forState:UIControlStateNormal];
+    //    }else if ([[[UtilBiaoQingData shareUtil]getBiaoQingType:message.content]  isEqualToString:BQGIF]) {
+    //        [_contentBtn setImageForPath:[[NSBundle mainBundle]pathForResource:[message.content stringByReplacingOccurrencesOfString:@".gif" withString:@""] ofType:@"gif" ]];
+    //
+    //    }
+    
+    [_contentBtn setImage:message.image forState:UIControlStateNormal];
+    //    NSLog(@"mes content:%@",message.content);
+    _contentBtn.frame = _messageFrame.contentF;
+    if (message.type == MessageTypeMe) {
+        _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentRight, kContentBottom, kContentLeft);
+    }
+}
+
+-(void)voiceBtn1:(Message*)messageObj{//MultChatObj
+
+    MultChatUIView* mCUI = [[MultChatUIView alloc]initWithFrame:CGRectMake(0, 0, UIScreenWidth, UIScreenHeight)];
+//    view.backgroundColor = [UIColor redColor];
+    mCUI.delegate = self;
+    [mCUI setMultChatObjToView:message.mCObj];
+    [[[UIApplication sharedApplication]keyWindow] addSubview:mCUI];
+//    MultChatUIView* mCUI = [[MultChatUIView alloc]init];
+//    [mCUI setMultChatObjToView:message.mCObj];
+    
+    
+    NSLog(@"MultChatObj");
+}
 -(void)setTextContent:(Message*) message{
 
     [_contentBtn setTitle:message.content forState:UIControlStateNormal];
@@ -285,6 +329,32 @@
     }
 }
 
+-(void)setMultChatObjMessage:(Message*)message{  //MultChatObj
+    //    [_contentBtn setTitle:message.content forState:UIControlStateNormal];
+    _voiceBtn = [[UIButton alloc]init];
+    _voiceBtn.frame = _messageFrame.voiceF;
+    [_voiceBtn setImage:[UIImage imageNamed:@"voice@2x.png"] forState:UIControlStateNormal];
+    [_voiceBtn addTarget:self action:@selector(voiceBtn:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.contentView addSubview:_voiceBtn];
+    contentVoiceIsPlaying = YES;
+    audio = [UUAVAudioPlayer sharedInstance];
+    
+    //    if ([[[UtilBiaoQingData shareUtil]getBiaoQingType:message.content]  isEqualToString:BQPNG]) {
+    //        [_contentBtn setImage:[UIImage imageNamed:message.content] forState:UIControlStateNormal];
+    //    }else if ([[[UtilBiaoQingData shareUtil]getBiaoQingType:message.content]  isEqualToString:BQGIF]) {
+    //        [_contentBtn setImageForPath:[[NSBundle mainBundle]pathForResource:[message.content stringByReplacingOccurrencesOfString:@".gif" withString:@""] ofType:@"gif" ]];
+    //
+    //    }
+    [_contentBtn setImage:message.image forState:UIControlStateNormal];
+    
+    //    NSLog(@"mes content:%@",message.content);
+    _contentBtn.frame = _messageFrame.contentF;
+    if (message.type == MessageTypeMe) {
+        _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentRight, kContentBottom, kContentLeft);
+    }
+}
+
 -(void)setVoiceImgContent:(Message*)message{
     
     //    [_contentBtn setTitle:message.content forState:UIControlStateNormal];
@@ -365,6 +435,9 @@
     imageViewMask.frame = CGRectInset(view.frame, 0.0f, 0.0f);
     view.layer.mask = imageViewMask.layer;
 }
-
-
+-(void)backFontPageImg:(UIImage *)img WithMultObj:(MultChatObj *)multChO{
+    [self.delegate backFontPageImg:img
+                       WithMultObj:multChO];
+    NSLog(@"yes it is ok.");
+}
 @end

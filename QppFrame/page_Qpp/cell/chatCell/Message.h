@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "Utill.h"
+#import "MultChatObj.h"
+
 typedef enum {
     
     MessageTypeMe = 0, // 自己发的
@@ -23,7 +25,8 @@ typedef enum {
     MessageShowTypeImg = 1 ,//图片
     MessageShowTypeImgVoice = 2, //图片声音
     MessageShowTypeData = 3,
-    MessageShowTypeImgVoiceByUIIMG = 4
+    MessageShowTypeImgVoiceByUIIMG = 4,
+    MessageShowTypeMultChatImg = 5,
 } MessageShowType;
 
 
@@ -43,5 +46,7 @@ typedef enum {
 
 @property(nonatomic,strong)UIImage* image;
 
+
+@property(nonatomic)MultChatObj* mCObj;//多语音时用到。
 
 @end

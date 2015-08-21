@@ -21,6 +21,7 @@
 #import "KeyBoradView.h"
 #import "TitleView.h"
 
+#import "MultChatObj.h"
 
 
 
@@ -377,6 +378,7 @@
     [_allMessagesFrame addObject:mf];
     NSLog(@"mf:%@",_allMessagesFrame);
 }
+
 - (void)addMessageWithData:(NSData*)data time:(NSString *)time dataType:(DataType)dataType{
     
 //    UIImageView* imgV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 200, 200)];
@@ -400,6 +402,30 @@
     [_allMessagesFrame addObject:mf];
     NSLog(@"mf:%@",_allMessagesFrame);
 }
+
+-(void)addMessageWithImg:(UIImage*)img withMultChatObj:(MultChatObj*)multCO withTime:(NSString*)time{
+
+    MessageFrame *mf = [[MessageFrame alloc] init];
+    Message *msg = [[Message alloc] init];
+    //    msg.content =content;
+    //    msg.content = @"biaoQing1.png";
+//    msg.imageData = [data copy];
+    msg.time = time;
+    msg.icon = @"1.jpg";
+    msg.type = MessageTypeMe;
+    msg.showType = MessageShowTypeMultChatImg;
+    //    msg.voicePath = voicePath;
+    msg.image = img;
+    msg.mCObj = multCO;
+    
+    mf.message = msg;
+    NSLog(@"message is :%@",mf.message.content);
+    [_allMessagesFrame addObject:mf];
+    NSLog(@"mf:%@",_allMessagesFrame);
+
+}
+
+
 
 #pragma chatContentTableView end
 
@@ -656,9 +682,9 @@
     //    [[[UIApplication sharedApplication]keyWindow] addSubview:img];
     
 }
+
 -(void)keyBoradPicWithImg:(UIImage*)image andVoicePath:(NSURL*)filePath2{
 
-    
 //    NSLog(@"comehere : %@",filePath);
 //    NSString *content =filePath;
     
@@ -685,6 +711,60 @@
     //    [[[UIApplication sharedApplication]keyWindow] addSubview:img];
 }
 
+//MultChatObjDelegate from keyborad
+-(void)keyBoradPicWithImg:(UIImage*)img withMultObj:(MultChatObj*)mcObj{
+
+    NSLog(@"keyBorad %@",mcObj);
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    NSDate *date = [NSDate date];
+    fmt.dateFormat = @"MM-dd"; // @"yyyy-MM-dd HH:mm:ss"
+    NSString *time = [fmt stringFromDate:date];
+    //    [self addMessageWithImg:content time:time];
+    //    - (void)addMessageWithImg:(NSString *)content andVoice:(NSURL*)voicePath time:(NSString *)time{
+    //    [self addMessageWithImg:filePath andVoice:filePath2 time:time];
+    
+//    [self addMessageWithImage:img andVoice:filePath2 time:time];
+//    -(void)addMessageWithImg:(UIImage*)img withMultChatObj:(MultChatObj*)multCO withTime:(NSString*)time{
+    [self addMessageWithImg:img withMultChatObj:mcObj withTime:time];
+    
+    // 2、刷新表格
+    [chatTableView reloadData];
+    // 3、滚动至当前行
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessagesFrame.count - 1 inSection:0];
+    [chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    // 4、清空文本框内容
+    keyBorad.sendMessageField.text = nil;
+
+//    NSLog(@"keyBoradDelegate...sucess .it is in ChatViewController.");
+}
+
+//MultChatObjDelegate from chatView => chatView
+-(void)backFontPageImg:(UIImage*)img WithMultObj:(MultChatObj*)multChO{
+    NSLog(@"keyBorad %@",multChO);
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    NSDate *date = [NSDate date];
+    fmt.dateFormat = @"MM-dd"; // @"yyyy-MM-dd HH:mm:ss"
+    NSString *time = [fmt stringFromDate:date];
+    //    [self addMessageWithImg:content time:time];
+    //    - (void)addMessageWithImg:(NSString *)content andVoice:(NSURL*)voicePath time:(NSString *)time{
+    //    [self addMessageWithImg:filePath andVoice:filePath2 time:time];
+    
+    //    [self addMessageWithImage:img andVoice:filePath2 time:time];
+    //    -(void)addMessageWithImg:(UIImage*)img withMultChatObj:(MultChatObj*)multCO withTime:(NSString*)time{
+    [self addMessageWithImg:img withMultChatObj:multChO withTime:time];
+    
+    // 2、刷新表格
+    [chatTableView reloadData];
+    // 3、滚动至当前行
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessagesFrame.count - 1 inSection:0];
+    [chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    // 4、清空文本框内容
+    keyBorad.sendMessageField.text = nil;
+    
+    //    NSLog(@"keyBoradDelegate...sucess .it is in ChatViewController.");
+    
+}
+
 -(void)moveButtonState:(NSString *)state{
 
     [keyBorad.sendMessageField resignFirstResponder];
@@ -705,5 +785,4 @@
 //    [player play];
     
 }
-
 @end

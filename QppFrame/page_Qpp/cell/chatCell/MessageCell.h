@@ -9,17 +9,18 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "UUAVAudioPlayer.h"
+#import "MultChatUIView.h"
 
 @protocol playerDelegate <NSObject>
 
 -(void)playTheVoice:(NSURL*)url;
-
+-(void)backFontPageImg:(UIImage *)img WithMultObj:(MultChatObj *)multChObj;
 @end
 
 
 @class MessageFrame;
 
-@interface MessageCell : UITableViewCell<UUAVAudioPlayerDelegate>
+@interface MessageCell : UITableViewCell<UUAVAudioPlayerDelegate,MultChatViewDelegate>
 {
     UUAVAudioPlayer *audio;
     BOOL contentVoiceIsPlaying;

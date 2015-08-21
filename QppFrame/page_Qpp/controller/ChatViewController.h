@@ -21,7 +21,7 @@
 
 #import "MultChatUIView.h"
 
-@interface ChatViewController : BaseUIViewController<UITextFieldDelegate,UITextViewDelegate,UITableViewDataSource,UITableViewDelegate,KeyBoradContentDelegate,testDelegate,keyBoradDelegate,VoiceDelegate,AVAudioPlayerDelegate,playerDelegate>{
+@interface ChatViewController : BaseUIViewController<UITextFieldDelegate,UITextViewDelegate,UITableViewDataSource,UITableViewDelegate,KeyBoradContentDelegate,testDelegate,keyBoradDelegate,VoiceDelegate,AVAudioPlayerDelegate,playerDelegate,MultChatViewDelegate>{
 
     BOOL isShowKey;
     

@@ -13,6 +13,7 @@
 @synthesize imageData;
 @synthesize voiceData;
 @synthesize image;
+@synthesize mCObj;
 
 - (void)setDict:(NSDictionary *)dict{
     

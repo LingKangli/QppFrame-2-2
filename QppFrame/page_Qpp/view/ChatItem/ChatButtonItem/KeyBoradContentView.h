@@ -34,6 +34,7 @@ typedef enum {
 -(void)keyBoradPic:(NSString*)filePath;
 //- (void)addMessageWithImg:(NSString *)content andVoice:(NSURL*)voicePath time:(NSString *)time{
 -(void)keyBoradPic:(NSString *)filePath andVoicePath:(NSURL*) voicePath;
+-(void)keyBoradPicWithImg:(UIImage*)img withMultObj:(MultChatObj*)mcObj;
 @end
 
 @interface KeyBoradContentView : UIView<UIImagePickerControllerDelegate,UINavigationBarDelegate,VoiceDelegate,DynamicScrollViewCilckDelegate,UIScrollViewDelegate,KeyBoradContentDelegate,KLAlertPickerDelegate,MultChatViewDelegate>{

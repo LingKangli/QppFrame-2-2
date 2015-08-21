@@ -357,8 +357,12 @@
 -(void)addPicKeyBoradView{
 
     [self viewClear:frameView];
+    
+    CGFloat width = UIScreenWidth/4-15;
+    CGFloat heigh = width;
+    
     for (int i = 0; i < 4; i++) {
-        PicViewItem* item = [[PicViewItem alloc]initWithFrame:CGRectMake(10+(10+80)*i, 5, 80, 80)];
+        PicViewItem* item = [[PicViewItem alloc]initWithFrame:CGRectMake(15+(10+width)*i, 5, width, heigh)];
         switch (i) {
             case 0:
                 item.itemLab.text = @"Album" ;
@@ -618,7 +622,11 @@
     }
 }
 
+-(void)backFontPageImg:(UIImage*)img WithMultObj:(MultChatObj*)multChObj {
 
+    [self.delegate keyBoradPicWithImg:img withMultObj:multChObj];
+    NSLog(@"back sucess");
+}
 
 //取消照相机的回调
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
