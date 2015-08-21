@@ -40,8 +40,8 @@
 }
 
 -(void)initial{
+    self.frame = CGRectMake(0, 0, UIScreenWidth, UIScreenHeight);
     [self setViewFrame];
-    
 }
 
 -(void)setViewFrame{
@@ -52,7 +52,7 @@
     titleView.backgroundColor = [UIColor redColor];
     [self addSubview:titleView];
     
-    UIButton* backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 30, UIScreenWidth*0.2, UIScreenHeight*0.05)];
+    UIButton* backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 30, self.frame.size.width*0.2, self.frame.size.height*0.05)];
     [backBtn setTitle:@"取消" forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(clickLeftBtn) forControlEvents:UIControlEventTouchUpInside];
     [titleView addSubview:backBtn];
@@ -80,6 +80,7 @@
     [[[UIApplication sharedApplication] keyWindow] addSubview:voiceImg];//将图片添加到当前窗口。
 
     thisPageData = [[MultChatObj alloc]init];
+    thisPageData.voiceArray = [[NSMutableArray alloc]init];
 }
 /*
 -(void)setViewFrame{
@@ -315,6 +316,29 @@
 //    
 //}
 
+-(void)setMultChatObjToView:(MultChatObj*)multChatObj{
+
+    chatBGImg.image = multChatObj.chatBgImg;
+    thisPageData.chatBgImg = chatBGImg.image;
+
+    for (int i = 0; i < [multChatObj.voiceArray count]; i++) {
+        MultChatPlayer* player = (MultChatPlayer*)[multChatObj.voiceArray objectAtIndex:i];
+        player.center = player.point;
+        player.frame = player.frame;
+        [player setImage:player.playerImg forState:UIControlStateNormal];
+        [self addSubview:player];
+        [thisPageData.voiceArray addObject:player];
+    }
+//    for (MultChatPlayer* player in multChatObj.voiceArray) {
+//        player = [multChatObj.voiceArra];
+//        player.playerImg = [UIImage imageNamed:@"myVoice.png"];
+//        player.point = point;
+//        player.center = point;
+//        player.playUrl = currentUrl;//播放声音地址
+//        [self addSubview:player];
+//    }
+}
+
 -(void)clickLeftBtn{ //back
     NSLog(@"clickLeftBtn");
 //    -(void)backFontPage:(MultChatObj*)multChO;
@@ -323,7 +347,8 @@
 }
 
 -(void)clickRightBtn{
-    [self.delegate backFontPage:thisPageData];
+    
+    [self.delegate backFontPageImg:chatBGImg.image WithMultObj:thisPageData];
     [self removeFromSuperview];
 }
 -(void)setBackgroundImg:(UIImage *)backgroundImage{//设置背景图片

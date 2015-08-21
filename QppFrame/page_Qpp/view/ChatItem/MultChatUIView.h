@@ -15,7 +15,7 @@
 @protocol MultChatViewDelegate <NSObject>
 
 @optional
--(void)backFontPage:(MultChatObj*)multChO;
+-(void)backFontPageImg:(UIImage*)img WithMultObj:(MultChatObj*)multChO ;
 
 @end
 
@@ -31,9 +31,12 @@
     AVAudioRecorder* _recorder;
    
     MultChatObj* thisPageData;
+    NSArray* multArray;
 }
 
 @property(nonatomic)UIImage* backgroundImg;
 @property(nonatomic)id<MultChatViewDelegate>delegate;
+
+-(void)setMultChatObjToView:(MultChatObj*)multChatObj;
 
 @end
