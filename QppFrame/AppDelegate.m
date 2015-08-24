@@ -27,6 +27,9 @@ static AppDelegate *shareAppDel = nil;
 
 @implementation AppDelegate
 @synthesize tabBar;
+
+//     连网测试
+@synthesize isConnectNetwrok;
 /*
 
 + (AppDelegate *)sharedManager
