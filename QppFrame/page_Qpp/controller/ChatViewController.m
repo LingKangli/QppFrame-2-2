@@ -361,6 +361,8 @@
     msg.icon = @"1.jpg";
     msg.type = MessageTypeMe;
     msg.showType = MessageShowTypeImg;
+    msg.isCurrentSend = YES; //连网测试
+
     mf.message = msg;
     NSLog(@"message is :%@",mf.message.content);
     [_allMessagesFrame addObject:mf];
@@ -380,6 +382,7 @@
     msg.type = MessageTypeMe;
     msg.showType = MessageShowTypeImgVoice;
     msg.voicePath = voicePath;
+    msg.isCurrentSend = YES; //连网测试
     mf.message = msg;
     NSLog(@"message is :%@",mf.message.content);
     [_allMessagesFrame addObject:mf];
@@ -396,6 +399,7 @@
     msg.type = MessageTypeMe;
     msg.showType = MessageShowTypeImgVoiceByUIIMG;
     msg.voicePath = voicePath;
+    msg.isCurrentSend = YES; //连网测试
     mf.message = msg;
     NSLog(@"message is :%@",mf.message.content);
     [_allMessagesFrame addObject:mf];
@@ -419,7 +423,7 @@
     msg.type = MessageTypeMe;
     msg.showType = MessageShowTypeData;
 //    msg.voicePath = voicePath;
-    
+    msg.isCurrentSend = YES; //连网测试
     mf.message = msg;
     NSLog(@"message is :%@",mf.message.content);
     [_allMessagesFrame addObject:mf];
@@ -440,7 +444,7 @@
     //    msg.voicePath = voicePath;
     msg.image = img;
     msg.mCObj = multCO;
-    
+    msg.isCurrentSend = YES; //连网测试
     mf.message = msg;
     NSLog(@"message is :%@",mf.message.content);
     [_allMessagesFrame addObject:mf];

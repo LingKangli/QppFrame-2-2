@@ -69,7 +69,7 @@
             }
             
             _contentF = CGRectMake(contentX, contentY, contentSize.width + kContentLeft + kContentRight, contentSize.height + kContentTop + kContentBottom);
-            _networkConnectRect = CGRectMake(_contentF.origin.x-40, _contentF.origin.y, 25, 25);//连网测试
+            _networkConnectRect = CGRectMake(_contentF.origin.x-40, _contentF.origin.y, 50, 50);//连网测试
         }
             break;
         case MessageShowTypeImgVoice:
