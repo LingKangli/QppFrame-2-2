@@ -21,6 +21,8 @@
 
 #import "MultChatUIView.h"
 
+#import "AppDelegate.h"
+
 @interface ChatViewController : BaseUIViewController<UITextFieldDelegate,UITextViewDelegate,UITableViewDataSource,UITableViewDelegate,KeyBoradContentDelegate,testDelegate,keyBoradDelegate,VoiceDelegate,AVAudioPlayerDelegate,playerDelegate,MultChatViewDelegate>{
 
     BOOL isShowKey;
@@ -37,6 +39,7 @@
 //     player.delegate = self;
 //    player.delegate = self;
 
+    AppDelegate* aDelegate;
 }
 
 @property (strong,nonatomic)UIButton* backBtn;

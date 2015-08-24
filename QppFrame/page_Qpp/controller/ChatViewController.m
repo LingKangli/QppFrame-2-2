@@ -24,7 +24,6 @@
 #import "MultChatObj.h"
 
 
-
 #define ContentCGRect CGRectMake(0, titleY+titleHeight, UIScreenWidth, UIScreenHeight-titleHeight)
 #define  kUTTypeImage @".png"
 
@@ -132,11 +131,9 @@
         MessageFrame *messageFrame = [[MessageFrame alloc] init];
         Message *message = [[Message alloc] init];
         message.dict = dict;
-        
+        message.isCurrentSend = NO; //连网测试
         messageFrame.showTime = ![previousTime isEqualToString:message.time];
-        
         messageFrame.message = message;
-        
         previousTime = message.time;
         
         [_allMessagesFrame addObject:messageFrame];
@@ -178,8 +175,33 @@
     titleView.backgroundColor = BackColor;
     [self.view addSubview:titleView];
     
+//  连网测试 begin
+    UIButton* btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 30)];
+    btn.backgroundColor = [UIColor greenColor];
+    [btn addTarget:self action:@selector(chageNetworkState) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn];
+//  连网测试 end
+    
 //    UITextField
+    aDelegate = [AppDelegate sharedManager];
+    
 
+}
+
+
+//连网测试
+-(void)chageNetworkState{
+
+    static int clickNum = 0;
+    if (clickNum % 2) {
+        aDelegate.isConnectNetwrok = NO;
+        NSLog(@" network state  no connect.");
+    }else{
+        aDelegate.isConnectNetwrok = YES;
+        NSLog(@" network state yes connect .");
+    
+    }
+    clickNum++;
 }
 //#pragma mark - 键盘处理
 //#pragma mark 键盘即将显示
@@ -322,6 +344,7 @@
     msg.icon = @"1.jpg";
     msg.type = MessageTypeMe;
     msg.showType = MessageShowTypeText;
+    msg.isCurrentSend = YES; //连网测试
     mf.message = msg;
     
     [_allMessagesFrame addObject:mf];

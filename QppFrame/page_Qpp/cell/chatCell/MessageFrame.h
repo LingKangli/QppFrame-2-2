@@ -37,6 +37,7 @@
 @property (nonatomic, assign, readonly) CGRect timeF;
 @property (nonatomic, assign, readonly) CGRect contentF;
 
+@property(nonatomic) CGRect networkConnectRect;//连网测试
 @property(nonatomic,assign,readonly)CGRect voiceF;
 
 @property (nonatomic, assign, readonly) CGFloat cellHeight; //cell高度

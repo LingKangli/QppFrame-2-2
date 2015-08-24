@@ -14,6 +14,7 @@
 @synthesize voiceData;
 @synthesize image;
 @synthesize mCObj;
+@synthesize isCurrentSend;//连网测试
 
 - (void)setDict:(NSDictionary *)dict{
     

@@ -46,6 +46,7 @@ typedef enum {
 
 @property(nonatomic,strong)UIImage* image;
 
+@property(nonatomic)BOOL isCurrentSend;//连网测试
 
 @property(nonatomic)MultChatObj* mCObj;//多语音时用到。
 

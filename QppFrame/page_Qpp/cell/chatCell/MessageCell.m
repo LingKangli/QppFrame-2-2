@@ -14,13 +14,15 @@
 #import "Utill.h"
 #import <AVFoundation/AVFoundation.h>
 
+#import "AppDelegate.h"
+
 @interface MessageCell ()
 {
     UIButton     *_timeBtn;
     UIImageView *_iconView;
     GifImageButton    *_contentBtn;
     UIButton   *_voiceBtn;
-    
+    UIButton* _networkBtn; //连网测试
     Message* message;
 }
 
@@ -58,7 +60,11 @@
         [self.contentView addSubview:_contentBtn];
         
         contentVoiceIsPlaying = NO;
-
+        
+        
+        _networkBtn = [[UIButton alloc]init]; //连网测试
+        _networkBtn.backgroundColor = [UIColor greenColor]; //连网测试
+//        [self.contentView addSubview:_networkBtn];
     }
     return self;
 }
@@ -162,6 +168,17 @@
     if (message.type == MessageTypeMe) {
         _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentRight, kContentBottom, kContentLeft);
     }
+   
+//     连网测试
+  AppDelegate*  aDelegate = [AppDelegate sharedManager];
+    if (message.isCurrentSend && !aDelegate.isConnectNetwrok) {
+        _networkBtn.frame = _messageFrame.networkConnectRect;
+        [self.contentView addSubview:_networkBtn];
+    }else{
+        message.isCurrentSend = NO;
+    }
+
+//    aDelegate.isConnectNetwrok = NO;
     
     UIImage *normal , *focused;
     if (message.type == MessageTypeMe) {
@@ -188,7 +205,8 @@
     
     [_contentBtn setBackgroundImage:normal forState:UIControlStateNormal];
     [_contentBtn setBackgroundImage:focused forState:UIControlStateHighlighted];
-
+    
+   
 }
 
 -(void)setImgContent:(Message*) message{

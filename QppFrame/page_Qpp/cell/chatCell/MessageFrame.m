@@ -37,7 +37,7 @@
 
     CGFloat iconY = CGRectGetMaxY(_timeF) + kMargin;
     _iconF = CGRectMake(iconX, iconY, kIconWH, kIconWH);
-    
+
     // 3、计算内容位置
     
     switch (message.showType) {
@@ -52,6 +52,9 @@
             }
             
             _contentF = CGRectMake(contentX, contentY, contentSize.width + kContentLeft + kContentRight, contentSize.height + kContentTop + kContentBottom);
+//            _networkConnectRect = CGRectMake(_contentF.origin.x-40, _contentF.origin.y, 50, 50);
+            _networkConnectRect = CGRectMake(_contentF.origin.x-40, _contentF.origin.y, 50, 50);//连网测试
+
         }
             
             break;
@@ -66,7 +69,7 @@
             }
             
             _contentF = CGRectMake(contentX, contentY, contentSize.width + kContentLeft + kContentRight, contentSize.height + kContentTop + kContentBottom);
-            
+            _networkConnectRect = CGRectMake(_contentF.origin.x-40, _contentF.origin.y, 25, 25);//连网测试
         }
             break;
         case MessageShowTypeImgVoice:
@@ -83,6 +86,7 @@
             _contentF = CGRectMake(contentX, contentY, contentSize.width + kContentLeft + kContentRight, contentSize.height + kContentTop + kContentBottom);
             
             _voiceF = CGRectMake(_contentF.origin.x-50, _contentF.origin.y, 50, 50);
+            _networkConnectRect = CGRectMake(_voiceF.origin.x-40, _voiceF.origin.y, 50, 50);//连网测试
         }
             break;
         default:
