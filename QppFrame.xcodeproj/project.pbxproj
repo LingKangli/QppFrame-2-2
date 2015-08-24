@@ -127,9 +127,21 @@
 		83E5B2731B6B7FDC00B721EC /* chatfrom_doctor_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E5B2721B6B7FDC00B721EC /* chatfrom_doctor_icon.png */; };
 		83FA04B81B5A440500053DDB /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83FA04B71B5A440500053DDB /* AssetsLibrary.framework */; };
 		D13407FF1B8335E500E64755 /* MultChatUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = D13407FE1B8335E500E64755 /* MultChatUIView.m */; };
+		D14D57FC1B870F96003A39C0 /* Qpp.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = D14D57FB1B870F96003A39C0 /* Qpp.sqlite */; };
+		D14D58011B871E80003A39C0 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D14D58001B871E80003A39C0 /* libsqlite3.0.dylib */; };
 		D150BC371B8420D0000FA9B3 /* MultChatObj.m in Sources */ = {isa = PBXBuildFile; fileRef = D150BC361B8420D0000FA9B3 /* MultChatObj.m */; };
 		D150BC391B842985000FA9B3 /* myVoice.png in Resources */ = {isa = PBXBuildFile; fileRef = D150BC381B842985000FA9B3 /* myVoice.png */; };
 		D150BC3C1B84699A000FA9B3 /* MultChatPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D150BC3B1B84699A000FA9B3 /* MultChatPlayer.m */; };
+		D1553F9D1B886DF40030E7BB /* DBConn.m in Sources */ = {isa = PBXBuildFile; fileRef = D1553F9C1B886DF40030E7BB /* DBConn.m */; };
+		D1553FAC1B8870DB0030E7BB /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = D1553FA21B8870DB0030E7BB /* FMDatabase.m */; };
+		D1553FAD1B8870DB0030E7BB /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D1553FA41B8870DB0030E7BB /* FMDatabaseAdditions.m */; };
+		D1553FAE1B8870DB0030E7BB /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = D1553FA61B8870DB0030E7BB /* FMDatabasePool.m */; };
+		D1553FAF1B8870DB0030E7BB /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D1553FA81B8870DB0030E7BB /* FMDatabaseQueue.m */; };
+		D1553FB01B8870DB0030E7BB /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = D1553FAB1B8870DB0030E7BB /* FMResultSet.m */; };
+		D1553FB41B8871450030E7BB /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D1553FB31B8871450030E7BB /* UserInfo.m */; };
+		D1553FB71B8872FE0030E7BB /* FriendsList.m in Sources */ = {isa = PBXBuildFile; fileRef = D1553FB61B8872FE0030E7BB /* FriendsList.m */; };
+		D1553FBA1B8873AF0030E7BB /* ChatRecords.m in Sources */ = {isa = PBXBuildFile; fileRef = D1553FB91B8873AF0030E7BB /* ChatRecords.m */; };
+		D1553FBD1B887F460030E7BB /* UserInfoDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = D1553FBC1B887F460030E7BB /* UserInfoDAO.m */; };
 		D160BEFD1B7F2C7200EBEC04 /* KLAlterPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D160BEFC1B7F2C7200EBEC04 /* KLAlterPicker.m */; };
 		E417907B1B4FD04300F68419 /* ServerConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = E417907A1B4FD04300F68419 /* ServerConnect.m */; };
 		E41790851B4FD47A00F68419 /* KeyBoradContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E417907E1B4FD47A00F68419 /* KeyBoradContentView.m */; };
@@ -400,11 +412,35 @@
 		83FA04B71B5A440500053DDB /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		D13407FD1B8335E500E64755 /* MultChatUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultChatUIView.h; path = ../MultChatUIView.h; sourceTree = "<group>"; };
 		D13407FE1B8335E500E64755 /* MultChatUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultChatUIView.m; path = ../MultChatUIView.m; sourceTree = "<group>"; };
+		D14D57FB1B870F96003A39C0 /* Qpp.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Qpp.sqlite; sourceTree = "<group>"; };
+		D14D58001B871E80003A39C0 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		D150BC351B8420D0000FA9B3 /* MultChatObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultChatObj.h; path = QppFrame/page_Qpp/view/ChatItem/MultChatObj.h; sourceTree = SOURCE_ROOT; };
 		D150BC361B8420D0000FA9B3 /* MultChatObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultChatObj.m; path = QppFrame/page_Qpp/view/ChatItem/MultChatObj.m; sourceTree = SOURCE_ROOT; };
 		D150BC381B842985000FA9B3 /* myVoice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = myVoice.png; path = image/QQ/myVoice.png; sourceTree = "<group>"; };
 		D150BC3A1B84699A000FA9B3 /* MultChatPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultChatPlayer.h; path = QppFrame/page_Qpp/view/ChatItem/MultChatPlayer.h; sourceTree = SOURCE_ROOT; };
 		D150BC3B1B84699A000FA9B3 /* MultChatPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultChatPlayer.m; path = QppFrame/page_Qpp/view/ChatItem/MultChatPlayer.m; sourceTree = SOURCE_ROOT; };
+		D1553F9B1B886DF40030E7BB /* DBConn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBConn.h; path = mode/DBMode/DBConn.h; sourceTree = "<group>"; };
+		D1553F9C1B886DF40030E7BB /* DBConn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBConn.m; path = mode/DBMode/DBConn.m; sourceTree = "<group>"; };
+		D1553FA11B8870DB0030E7BB /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabase.h; path = API/FMDB/FMDatabase.h; sourceTree = "<group>"; };
+		D1553FA21B8870DB0030E7BB /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabase.m; path = API/FMDB/FMDatabase.m; sourceTree = "<group>"; };
+		D1553FA31B8870DB0030E7BB /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabaseAdditions.h; path = API/FMDB/FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		D1553FA41B8870DB0030E7BB /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabaseAdditions.m; path = API/FMDB/FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		D1553FA51B8870DB0030E7BB /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabasePool.h; path = API/FMDB/FMDatabasePool.h; sourceTree = "<group>"; };
+		D1553FA61B8870DB0030E7BB /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabasePool.m; path = API/FMDB/FMDatabasePool.m; sourceTree = "<group>"; };
+		D1553FA71B8870DB0030E7BB /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabaseQueue.h; path = API/FMDB/FMDatabaseQueue.h; sourceTree = "<group>"; };
+		D1553FA81B8870DB0030E7BB /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabaseQueue.m; path = API/FMDB/FMDatabaseQueue.m; sourceTree = "<group>"; };
+		D1553FA91B8870DB0030E7BB /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDB.h; path = API/FMDB/FMDB.h; sourceTree = "<group>"; };
+		D1553FAA1B8870DB0030E7BB /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMResultSet.h; path = API/FMDB/FMResultSet.h; sourceTree = "<group>"; };
+		D1553FAB1B8870DB0030E7BB /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = API/FMDB/FMResultSet.m; sourceTree = "<group>"; };
+		D1553FB21B8871450030E7BB /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfo.h; path = mode/enity/UserInfo.h; sourceTree = "<group>"; };
+		D1553FB31B8871450030E7BB /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfo.m; path = mode/enity/UserInfo.m; sourceTree = "<group>"; };
+		D1553FB51B8872FE0030E7BB /* FriendsList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsList.h; path = mode/enity/FriendsList.h; sourceTree = "<group>"; };
+		D1553FB61B8872FE0030E7BB /* FriendsList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsList.m; path = mode/enity/FriendsList.m; sourceTree = "<group>"; };
+		D1553FB81B8873AF0030E7BB /* ChatRecords.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatRecords.h; path = mode/enity/ChatRecords.h; sourceTree = "<group>"; };
+		D1553FB91B8873AF0030E7BB /* ChatRecords.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatRecords.m; path = mode/enity/ChatRecords.m; sourceTree = "<group>"; };
+		D1553FBB1B887F460030E7BB /* UserInfoDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoDAO.h; path = mode/DBMode/UserInfoDAO.h; sourceTree = "<group>"; };
+		D1553FBC1B887F460030E7BB /* UserInfoDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoDAO.m; path = mode/DBMode/UserInfoDAO.m; sourceTree = "<group>"; };
+		D1553FBE1B8885FC0030E7BB /* TableData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableData.h; sourceTree = "<group>"; };
 		D160BEFB1B7F2C7200EBEC04 /* KLAlterPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KLAlterPicker.h; path = itemView/KLAlterPicker.h; sourceTree = "<group>"; };
 		D160BEFC1B7F2C7200EBEC04 /* KLAlterPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KLAlterPicker.m; path = itemView/KLAlterPicker.m; sourceTree = "<group>"; };
 		E41790791B4FD04300F68419 /* ServerConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerConnect.h; path = API/ServerConnect.h; sourceTree = "<group>"; };
@@ -578,6 +614,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D14D58011B871E80003A39C0 /* libsqlite3.0.dylib in Frameworks */,
 				8359A1481B784817006CC019 /* CoreFoundation.framework in Frameworks */,
 				83FA04B81B5A440500053DDB /* AssetsLibrary.framework in Frameworks */,
 				83A0EB551B57ACF900920B33 /* UIKit.framework in Frameworks */,
@@ -760,6 +797,7 @@
 		83A0EB511B57AC8D00920B33 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D14D58001B871E80003A39C0 /* libsqlite3.0.dylib */,
 				8359A1471B784817006CC019 /* CoreFoundation.framework */,
 				83FA04B71B5A440500053DDB /* AssetsLibrary.framework */,
 				83A0EB541B57ACF900920B33 /* UIKit.framework */,
@@ -822,6 +860,16 @@
 			name = chatContent;
 			sourceTree = "<group>";
 		};
+		D14D58021B872566003A39C0 /* DBMode */ = {
+			isa = PBXGroup;
+			children = (
+				D1553FB11B88710E0030E7BB /* entity */,
+				D1553F991B881E1F0030E7BB /* DB */,
+				D1553F9A1B881E250030E7BB /* Bean */,
+			);
+			name = DBMode;
+			sourceTree = "<group>";
+		};
 		D150BC341B841254000FA9B3 /* AllBiaoQingFrame */ = {
 			isa = PBXGroup;
 			children = (
@@ -842,6 +890,85 @@
 				D150BC3B1B84699A000FA9B3 /* MultChatPlayer.m */,
 			);
 			name = multChatUIView;
+			sourceTree = "<group>";
+		};
+		D1553F981B881DDD0030E7BB /* viewMode */ = {
+			isa = PBXGroup;
+			children = (
+				83C354B01B7AE60400856590 /* chatContent */,
+				8353CE831B5754E30031DB61 /* chatMode */,
+				E4CF3EB71B3EA243007F71CB /* FriendStoryItem.h */,
+				E4CF3EB81B3EA243007F71CB /* FriendStoryItem.m */,
+			);
+			name = viewMode;
+			sourceTree = "<group>";
+		};
+		D1553F991B881E1F0030E7BB /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				D1553FBE1B8885FC0030E7BB /* TableData.h */,
+				D1553F9B1B886DF40030E7BB /* DBConn.h */,
+				D1553F9C1B886DF40030E7BB /* DBConn.m */,
+				D1553FBB1B887F460030E7BB /* UserInfoDAO.h */,
+				D1553FBC1B887F460030E7BB /* UserInfoDAO.m */,
+			);
+			name = DB;
+			sourceTree = "<group>";
+		};
+		D1553F9A1B881E250030E7BB /* Bean */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Bean;
+			sourceTree = "<group>";
+		};
+		D1553F9E1B8870640030E7BB /* json */ = {
+			isa = PBXGroup;
+			children = (
+				83569B071B56724C00359560 /* JSONKit.h */,
+				83569B081B56724C00359560 /* JSONKit.m */,
+			);
+			name = json;
+			sourceTree = "<group>";
+		};
+		D1553F9F1B8870780030E7BB /* server */ = {
+			isa = PBXGroup;
+			children = (
+				E41790791B4FD04300F68419 /* ServerConnect.h */,
+				E417907A1B4FD04300F68419 /* ServerConnect.m */,
+			);
+			name = server;
+			sourceTree = "<group>";
+		};
+		D1553FA01B88709D0030E7BB /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				D1553FA11B8870DB0030E7BB /* FMDatabase.h */,
+				D1553FA21B8870DB0030E7BB /* FMDatabase.m */,
+				D1553FA31B8870DB0030E7BB /* FMDatabaseAdditions.h */,
+				D1553FA41B8870DB0030E7BB /* FMDatabaseAdditions.m */,
+				D1553FA51B8870DB0030E7BB /* FMDatabasePool.h */,
+				D1553FA61B8870DB0030E7BB /* FMDatabasePool.m */,
+				D1553FA71B8870DB0030E7BB /* FMDatabaseQueue.h */,
+				D1553FA81B8870DB0030E7BB /* FMDatabaseQueue.m */,
+				D1553FA91B8870DB0030E7BB /* FMDB.h */,
+				D1553FAA1B8870DB0030E7BB /* FMResultSet.h */,
+				D1553FAB1B8870DB0030E7BB /* FMResultSet.m */,
+			);
+			name = FMDB;
+			sourceTree = "<group>";
+		};
+		D1553FB11B88710E0030E7BB /* entity */ = {
+			isa = PBXGroup;
+			children = (
+				D1553FB21B8871450030E7BB /* UserInfo.h */,
+				D1553FB31B8871450030E7BB /* UserInfo.m */,
+				D1553FB51B8872FE0030E7BB /* FriendsList.h */,
+				D1553FB61B8872FE0030E7BB /* FriendsList.m */,
+				D1553FB81B8873AF0030E7BB /* ChatRecords.h */,
+				D1553FB91B8873AF0030E7BB /* ChatRecords.m */,
+			);
+			name = entity;
 			sourceTree = "<group>";
 		};
 		E417907C1B4FD34600F68419 /* chatViewToolItems */ = {
@@ -916,6 +1043,7 @@
 		E43FA9491B32537400C8352D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D14D57FB1B870F96003A39C0 /* Qpp.sqlite */,
 				83A0EB561B57AFEB00920B33 /* messages.plist */,
 				E43FA94A1B32537400C8352D /* Info.plist */,
 				E43FA94B1B32537400C8352D /* main.m */,
@@ -1291,10 +1419,8 @@
 		E4CC3A061B3904FC00525440 /* Mode */ = {
 			isa = PBXGroup;
 			children = (
-				83C354B01B7AE60400856590 /* chatContent */,
-				8353CE831B5754E30031DB61 /* chatMode */,
-				E4CF3EB71B3EA243007F71CB /* FriendStoryItem.h */,
-				E4CF3EB81B3EA243007F71CB /* FriendStoryItem.m */,
+				D14D58021B872566003A39C0 /* DBMode */,
+				D1553F981B881DDD0030E7BB /* viewMode */,
 			);
 			name = Mode;
 			sourceTree = "<group>";
@@ -1302,14 +1428,13 @@
 		E4CC3A071B39050400525440 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				D1553FA01B88709D0030E7BB /* FMDB */,
+				D1553F9F1B8870780030E7BB /* server */,
+				D1553F9E1B8870640030E7BB /* json */,
 				835BC7DA1B748DAD0038E5A0 /* UtilBiaoQingData.h */,
 				835BC7DB1B748DAD0038E5A0 /* UtilBiaoQingData.m */,
-				83569B071B56724C00359560 /* JSONKit.h */,
-				83569B081B56724C00359560 /* JSONKit.m */,
 				83A0EB441B5782BE00920B33 /* DefineData.h */,
 				83A0EB451B5782BE00920B33 /* DefineData.m */,
-				E41790791B4FD04300F68419 /* ServerConnect.h */,
-				E417907A1B4FD04300F68419 /* ServerConnect.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -1627,6 +1752,7 @@
 				835BC8411B748E510038E5A0 /* Nipic_9802588_20120416104723783000.gif in Resources */,
 				E4C2DFEC1B3A919200BEB9FC /* jianTou.png in Resources */,
 				83A0EB7D1B57B15C00920B33 /* chatto_bg_focused.png in Resources */,
+				D14D57FC1B870F96003A39C0 /* Qpp.sqlite in Resources */,
 				835BC82A1B748E510038E5A0 /* catWalk.gif in Resources */,
 				E4C2E0391B3AB43600BEB9FC /* BiaoPingCellTableViewCell.xib in Resources */,
 				835BC8491B748E510038E5A0 /* Nipic_9802588_20120416105652364000.gif in Resources */,
@@ -1718,6 +1844,10 @@
 			files = (
 				E453F3E71B33CB300092DF8C /* QppViewCell.m in Sources */,
 				E417907B1B4FD04300F68419 /* ServerConnect.m in Sources */,
+				D1553FAE1B8870DB0030E7BB /* FMDatabasePool.m in Sources */,
+				D1553F9D1B886DF40030E7BB /* DBConn.m in Sources */,
+				D1553FB71B8872FE0030E7BB /* FriendsList.m in Sources */,
+				D1553FAC1B8870DB0030E7BB /* FMDatabase.m in Sources */,
 				E4C2E01C1B3AAE8900BEB9FC /* DefineBG.m in Sources */,
 				E4C2DFDB1B3A486500BEB9FC /* SendInfoController.m in Sources */,
 				E4C2E0171B3AAC0C00BEB9FC /* BiaoPingCellTableViewCell.m in Sources */,
@@ -1754,7 +1884,10 @@
 				E4C2DFFF1B3A99BC00BEB9FC /* HeadView.m in Sources */,
 				E4ED90021B3968A600B037BB /* SendInfoView.m in Sources */,
 				E41790851B4FD47A00F68419 /* KeyBoradContentView.m in Sources */,
+				D1553FBA1B8873AF0030E7BB /* ChatRecords.m in Sources */,
+				D1553FAF1B8870DB0030E7BB /* FMDatabaseQueue.m in Sources */,
 				E417908B1B4FD48A00F68419 /* KeyBoradView.m in Sources */,
+				D1553FBD1B887F460030E7BB /* UserInfoDAO.m in Sources */,
 				E4ED8FEE1B3958F200B037BB /* TongXuLvCell.m in Sources */,
 				E4C2E0201B3AAF4400BEB9FC /* ReviseView.m in Sources */,
 				E4C2E03C1B3ABC3C00BEB9FC /* SettingController.m in Sources */,
@@ -1764,11 +1897,13 @@
 				D13407FF1B8335E500E64755 /* MultChatUIView.m in Sources */,
 				E4ED90101B3969ED00B037BB /* FriendsStoryCellTableViewCell.m in Sources */,
 				83A0EB4E1B57A8BD00920B33 /* Message.m in Sources */,
+				D1553FB41B8871450030E7BB /* UserInfo.m in Sources */,
 				83569B091B56724C00359560 /* JSONKit.m in Sources */,
 				E4C2DFF51B3A96AF00BEB9FC /* PersonCenterController.m in Sources */,
 				D150BC371B8420D0000FA9B3 /* MultChatObj.m in Sources */,
 				83337C501B539B3500312E0C /* PicViewItem.m in Sources */,
 				E4CF3EB91B3EA243007F71CB /* FriendStoryItem.m in Sources */,
+				D1553FAD1B8870DB0030E7BB /* FMDatabaseAdditions.m in Sources */,
 				835BC86A1B7490270038E5A0 /* ScrollItemView.m in Sources */,
 				E4FB58601B50BDA700593EAC /* ZhuCeViewController.m in Sources */,
 				83C354B61B7AE74500856590 /* KeyBoradBQContent.m in Sources */,
@@ -1777,6 +1912,7 @@
 				E453F3F61B33EA710092DF8C /* SendMessageView.m in Sources */,
 				E4C2DFD41B3A36D600BEB9FC /* FriendRoundController.m in Sources */,
 				E43FA94C1B32537400C8352D /* main.m in Sources */,
+				D1553FB01B8870DB0030E7BB /* FMResultSet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
