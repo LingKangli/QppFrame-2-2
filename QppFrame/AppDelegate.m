@@ -19,6 +19,7 @@
 
 //static AppDelegate* shareAppDel = nil;
 
+#import "UserInfoDAO.h"
 
 @interface AppDelegate ()
 @end
@@ -85,6 +86,8 @@ static AppDelegate *shareAppDel = nil;
     [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error1]; [session setActive:YES error:&error1];
     
 
+    UserInfoDAO* dao = [[UserInfoDAO alloc]init];
+    [dao getCurrentUserInfo];
     
     return YES;
 }

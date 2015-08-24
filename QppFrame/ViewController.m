@@ -110,6 +110,8 @@
         TabBarViewController  *tabBar = [[TabBarViewController alloc]init];
         [self presentModalViewController:tabBar animated:YES];
         NSLog(@"click...");
+        
+        
 //    }
 }
 

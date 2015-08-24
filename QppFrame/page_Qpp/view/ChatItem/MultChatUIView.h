@@ -38,5 +38,4 @@
 @property(nonatomic)id<MultChatViewDelegate>delegate;
 
 -(void)setMultChatObjToView:(MultChatObj*)multChatObj;
-
 @end

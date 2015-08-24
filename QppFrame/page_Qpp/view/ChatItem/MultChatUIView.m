@@ -9,6 +9,8 @@
 #import "MultChatUIView.h"
 #import "Utill.h"
 
+#define playerWidth 40
+
 @implementation MultChatUIView
 
 @synthesize backgroundImg;
@@ -72,9 +74,9 @@
     chatBGImg.tag = 1;
     [self addSubview:chatBGImg];
     
-    UIView* bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.frame.size.height-titleView.frame.size.height, self.frame.size.width, self.frame.size.height*0.1)];
-    bottomView.backgroundColor = [UIColor redColor];
-    [self addSubview:bottomView];
+//    UIView* bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.frame.size.height-titleView.frame.size.height, self.frame.size.width, self.frame.size.height*0.1)];
+//    bottomView.backgroundColor = [UIColor redColor];
+//    [self addSubview:bottomView];
     
     voiceImg = [[UIImageView alloc]initWithFrame:voiceFrame];
     [[[UIApplication sharedApplication] keyWindow] addSubview:voiceImg];//将图片添加到当前窗口。
@@ -82,72 +84,6 @@
     thisPageData = [[MultChatObj alloc]init];
     thisPageData.voiceArray = [[NSMutableArray alloc]init];
 }
-/*
--(void)setViewFrame{
-
-    self.backgroundColor = [UIColor blackColor];
-    
-//    chatObj = [[MultChatObj alloc]init];
-//    audio = [UUAVAudioPlayer sharedInstance];
-
-    UIView* titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.1)];
-    titleView.backgroundColor = [UIColor redColor];
-    [self addSubview:titleView];
-    
-    UIButton* backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 30, UIScreenWidth*0.2, UIScreenHeight*0.05)];
-    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
-    [backBtn addTarget:self action:@selector(clickLeftBtn) forControlEvents:UIControlEventTouchUpInside];
-    [titleView addSubview:backBtn];
-    
-    UILabel* title = [[UILabel alloc]initWithFrame:CGRectMake(UIScreenWidth/2-20, backBtn.frame.origin.y, UIScreenWidth*0.3, UIScreenHeight*0.05)];
-    title.text = @"表情";
-    title.textColor = [UIColor whiteColor];
-    title.font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
-    [titleView addSubview:title];
-    
-    chatBGImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, titleView.frame.origin.y+titleView.frame.size.height+10, self.frame.size.width, 250)];
-    chatBGImg.tag = 1;
-    [self addSubview:chatBGImg];
-
-    UIView* bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.frame.size.height-titleView.frame.size.height, self.frame.size.width, self.frame.size.height*0.1)];
-    bottomView.backgroundColor = [UIColor redColor];
-    [self addSubview:bottomView];
-    
-//    UITapGestureRecognizer* clickView = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchesBegan:withEvent:)];
-////    [clickView addTarget:self action:@selector(touchDown)];
-//    [self addGestureRecognizer:clickView];
-    
-    
-//    [self addTarget:self action:@selector(btnDown:) forControlEvents:UIControlEventTouchDown];
-//    [self addTarget:self action:@selector(btnUp:) forControlEvents:UIControlEventTouchUpInside];
-//    [self addTarget:self action:@selector(btnDragUp:) forControlEvents:UIControlEventTouchDragOutside];
-//    [self addTarget:self action:@selector(btnDragUp:) forControlEvents:UIControlEventTouchCancel];
-//    [self addTarget:self action:@selector(btnDragUp:) forControlEvents:UIControlEventTouchUpOutside];
-//    self.delegate = self;
-
-}*/
-
-//-(void)sucessRecorder:(NSURL *)filePath andPicPath:(NSString *)imgPath{
-//
-//    NSLog(@"recorder is sucess.%@",filePath);
-//    UIImageView* imageV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 90, 90)];
-//    imageV.backgroundColor = [UIColor greenColor];
-////    [imageV setImage:[UIImage imageNamed:imgPath]];
-//    [self addSubview:imageV];
-//    
-//    
-//    
-//    [audio playSongWithUrl:filePath];
-//}
-//[self.delegate sucessRecorder:_recorder.url andPicPath:_imgNormalName];
-
-//-(void)touchDown{
-//
-//    NSLog(@"the touchDown");
-//    
-//    //            [frameView addSubview:itemVoiceBtn.imgView];
-//    
-//}
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 
@@ -166,17 +102,19 @@
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch  locationInView:self];
     
-    [self setUrl];
-    [self setRecorder];
-    
-    MultChatPlayer* player = [[MultChatPlayer alloc]initWithFrame:CGRectMake(point.x, point.y, 40, 40)];
-    player.playerImg = [UIImage imageNamed:@"myVoice.png"];
-    player.point = point;
-    player.center = point;
-    player.playUrl = currentUrl;//播放声音地址
-    [self addSubview:player];
-    [thisPageData.voiceArray addObject:player];
-    
+    if([self isContains:touches]){
+        [self setUrl];
+        [self setRecorder];
+        
+        MultChatPlayer* player = [[MultChatPlayer alloc]initWithFrame:CGRectMake(point.x, point.y, playerWidth, playerWidth)];
+        player.playerImg = [UIImage imageNamed:@"myVoice.png"];
+        player.point = point;
+        player.center = point;
+        player.playUrl = currentUrl;//播放声音地址
+        [self addSubview:player];
+        [thisPageData.voiceArray addObject:player];
+        
+    }
 }
 
 -(void)setUrl{
@@ -265,12 +203,28 @@
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-    [self stopRecordVoice];
-    [self stopCountTime];
-    [timer invalidate];
-    NSLog(@"touch end yes.");
+    
+    if([self isContains:touches]){
+        [self stopRecordVoice];
+        [self stopCountTime];
+        [timer invalidate];
+    }
+   
 }
 
+-(BOOL)isContains:(NSSet *)touches {
+    
+    UITouch* touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self];
+    
+    CGRect rect = CGRectMake(0, chatBGImg.frame.origin.y, UIScreenWidth,  self.frame.size.height-chatBGImg.frame.origin.y);
+   
+    if (CGRectContainsPoint(rect, point)) {
+        return YES;
+    }else{
+        return NO;
+    }
+}
 
 -(void) stopRecordVoice{
     double theTime = _recorder.currentTime;
