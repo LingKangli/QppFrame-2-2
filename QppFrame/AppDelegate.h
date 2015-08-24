@@ -15,6 +15,9 @@
 @property NSInteger testInt;
 @property (nonatomic,strong)TabBarViewController* tabBar;
 
+//     连网测试
+@property (nonatomic)BOOL isConnectNetwrok;
+
 + (AppDelegate *)sharedManager;
 + (UIWindow *)getWindow;
 +(void)setWindowFrame;
