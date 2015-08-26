@@ -14,6 +14,7 @@ static UserInfo* user = nil;
 @synthesize userImg = _userImg;
 @synthesize userName =_userName;
 @synthesize userPwd = _userPwd;
+@synthesize userEmail = _userEmail;
 
 +(UserInfo*)sharedUserInfo{
 

@@ -13,6 +13,7 @@
 @property(nonatomic)NSString* userName;
 @property(nonatomic)NSInteger userID;
 @property(nonatomic)NSString* userPwd;
+@property(nonatomic)NSString* userEmail;
 
 +(UserInfo*)sharedUserInfo;
 @end
