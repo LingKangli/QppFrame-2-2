@@ -8,8 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "UserInfo.h"
+#import "AsFrindInfo.h"
 
 @interface UserInfoDAO : NSObject
 
 -(UserInfo*)getCurrentUserInfo;
+
+-(NSMutableArray*) getUserFriends;//得到当前用户的所有朋友名字
+
+
 @end

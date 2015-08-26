@@ -33,7 +33,47 @@
         [dbConn.db close];
     }
     return nil;
-//if ([[DBConn sharedDBConn] openDB]) {
-//}
+
 }
+
+-(NSMutableArray*) getUserFriends{
+
+    NSMutableArray* userFrieds = [[NSMutableArray alloc]init];
+    
+    DBConn* dbConn = [DBConn sharedDBConn];
+    
+    if ([dbConn openDB]) {/*
+        NSString * sql = [NSString stringWithFormat:
+                          @"select distinct friendsListTabel.friendID,userInfo_table.userName,userInfo_table.userEmail, userInfo_table.Ssex from friendsListTabel,userInfo_table\
+                          where userInfo_table.userID=friendsListTabel.friendID\
+                          and friendsListTabel.userID =1"];*/
+        
+        NSString * sql = [NSString stringWithFormat:
+                          @"select distinct userInfo_table.userName from friendsListTabel,userInfo_table\
+                          where userInfo_table.userID=friendsListTabel.friendID\
+                          and friendsListTabel.userID =1"];
+
+        FMResultSet * rs = [dbConn.db executeQuery:sql];
+        while ([rs next]) {/*
+            AsFrindInfo* userInfo = [[AsFrindInfo alloc]init];
+            userInfo.userName = [rs stringForColumn:@"userName"];
+            userInfo.userEmail = [rs stringForColumn:@"userEmail"];
+            userInfo.Ssex = [rs stringForColumn:@"Ssex"];
+            NSLog(@"userInfo friends is %@",userInfo.userName);
+            [userFrieds addObject:userInfo];*/
+            NSString* userName = [rs stringForColumn:@"userName"];
+            [userFrieds addObject:userName];
+        }
+//        NSArray *newArray = [userFrieds sortedArrayUsingSelector:@selector(compare:)];
+//        NSLog(@"newarry :%@",newArray);
+        
+        [dbConn.db close];
+    }
+    
+    return userFrieds;
+}
+
+//-(NSArray*)compare:(NSArray*)str {
+//    return str;
+//}
 @end
