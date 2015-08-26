@@ -170,13 +170,7 @@
     }
    
 //     连网测试
-  AppDelegate*  aDelegate = [AppDelegate sharedManager];
-    if (message.isCurrentSend && !aDelegate.isConnectNetwrok) {
-        _networkBtn.frame = _messageFrame.networkConnectRect;
-        [self.contentView addSubview:_networkBtn];
-    }else{
-        message.isCurrentSend = NO;
-    }
+    [self connectNetwork];
 
 //    aDelegate.isConnectNetwrok = NO;
     
@@ -220,6 +214,9 @@
     if (message.type == MessageTypeMe) {
         _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentRight, kContentBottom, kContentLeft);
     }
+    
+    //     连网测试
+    [self connectNetwork];
     
     NSLog(@"message.content is %@ is",message.content);
     
@@ -295,7 +292,8 @@
     if (message.type == MessageTypeMe) {
         _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentRight, kContentBottom, kContentLeft);
     }
-    
+    //     连网测试
+    [self connectNetwork];
     
     /*
      UIImage *normal , *focused;
@@ -345,6 +343,8 @@
     if (message.type == MessageTypeMe) {
         _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentRight, kContentBottom, kContentLeft);
     }
+    //     连网测试
+    [self connectNetwork];
 }
 
 -(void)setMultChatObjMessage:(Message*)message{  //MultChatObj
@@ -371,6 +371,8 @@
     if (message.type == MessageTypeMe) {
         _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentRight, kContentBottom, kContentLeft);
     }
+    //     连网测试
+    [self connectNetwork];
 }
 
 -(void)setVoiceImgContent:(Message*)message{
@@ -414,7 +416,8 @@
                 _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentRight, kContentBottom, kContentLeft);
     }
     
-    
+    //     连网测试
+    [self connectNetwork];
     /*
     UIImage *normal , *focused;
     if (message.type == MessageTypeMe) {
@@ -442,6 +445,18 @@
         [audio playSongWithUrl:_messageFrame.message.voicePath];
 }
 
+-(void)connectNetwork{
+
+    //     连网测试
+    AppDelegate*  aDelegate = [AppDelegate sharedManager];
+    if (message.isCurrentSend && !aDelegate.isConnectNetwrok) {
+        _networkBtn.frame = _messageFrame.networkConnectRect;
+        [self.contentView addSubview:_networkBtn];
+    }else{
+        message.isCurrentSend = NO;
+    }
+
+}
 //- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer*)player successfully:(BOOL)flag{
 //    
 //    NSLog(@"test////");
