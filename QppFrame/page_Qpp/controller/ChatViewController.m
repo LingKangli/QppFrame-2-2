@@ -19,7 +19,6 @@
 //#import "Command.h"
 #import "MoveButton.h"
 #import "KeyBoradView.h"
-#import "TitleView.h"
 
 #import "MultChatObj.h"
 
@@ -30,6 +29,8 @@
 @implementation ChatViewController
 
 @synthesize backBtn = _backBtn;
+@synthesize titleValue = _titleValue;
+//@synthesize block;
 
 -(instancetype)init{
 
@@ -38,6 +39,21 @@
     isShowKey = NO;
     return self;
 }
+
+/*
+- (void)blockMethod:(id)sender {
+    if (self) {
+        if (self.block) {
+            self.block(titleView.titleLab.text);
+            NSLog(@"chat block.");
+//            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+        NSLog(@"chat is click.");
+    }else{
+        titleView.titleLab.text = @"title";
+    }
+}
+*/
 
 -(void)viewDidLoad{
     
@@ -167,10 +183,10 @@
 //    [self.view addSubview:sendBtn];
 
     
-    TitleView* titleView = [[TitleView alloc]initWithFrame:CGRectMake(0, 0, UIScreenWidth,titleY+titleHeight)];
+    titleView = [[TitleView alloc]initWithFrame:CGRectMake(0, 0, UIScreenWidth,titleY+titleHeight)];
     [titleView.leftBtn setTitle:@"返回" forState:UIControlStateNormal];
     titleView.leftBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
-    titleView.titleLab.text = @"宋庆龄";
+    titleView.titleLab.text = _titleValue;
     [titleView.leftBtn addTarget:self action:@selector(backBtn:) forControlEvents:UIControlEventTouchUpInside];
     titleView.backgroundColor = BackColor;
     [self.view addSubview:titleView];
@@ -602,7 +618,6 @@
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessagesFrame.count - 1 inSection:0];
         [chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
-    
         NSLog(@"state : %i",state);
 }
 
@@ -812,4 +827,6 @@
 //    [player play];
     
 }
+
+
 @end

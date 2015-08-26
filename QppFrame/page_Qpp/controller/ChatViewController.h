@@ -22,6 +22,7 @@
 #import "MultChatUIView.h"
 
 #import "AppDelegate.h"
+#import "TitleView.h"
 
 @interface ChatViewController : BaseUIViewController<UITextFieldDelegate,UITextViewDelegate,UITableViewDataSource,UITableViewDelegate,KeyBoradContentDelegate,testDelegate,keyBoradDelegate,VoiceDelegate,AVAudioPlayerDelegate,playerDelegate,MultChatViewDelegate>{
 
@@ -31,7 +32,7 @@
     UITableView* chatTableView;
     KeyBoradView* keyBorad;
     
-     NSMutableArray  *_allMessagesFrame;
+    NSMutableArray  *_allMessagesFrame;
     NSString* filePath;
     
     AVAudioPlayer* player;
@@ -40,7 +41,16 @@
 //    player.delegate = self;
 
     AppDelegate* aDelegate;
+    TitleView* titleView;
 }
 
 @property (strong,nonatomic)UIButton* backBtn;
+@property(strong,nonatomic)NSString* titleValue;
+//传值 begin
+//SecondViewController.h
+//typedef void (^ablock)(NSString *str);
+////SecondViewController.h
+//@property (nonatomic, copy) ablock block;
+//传值 end
+
 @end
