@@ -139,6 +139,7 @@
 -(void)click{
    
     ChatViewController* cVC = [[ChatViewController alloc]init];
+    
     [self.navigationController setNavigationBarHidden:YES];//顶部的NavigationBar显示情况
     [self.navigationController pushViewController:cVC animated:YES];
     [self hideTabBar];
@@ -205,6 +206,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
  
     ChatViewController* cVC = [[ChatViewController alloc]init];
+    cVC.titleValue = [namesText objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:cVC animated:YES];//调用ChatViewController
     [search resignFirstResponder];
 
