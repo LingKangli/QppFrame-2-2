@@ -21,7 +21,9 @@
 #import "KeyBoradView.h"
 
 #import "MultChatObj.h"
-
+#import "ECDeviceHeaders.h" 
+#import "DeviceChatHelper.h"
+#import "DeviceDelegateHelper.h"
 
 #define ContentCGRect CGRectMake(0, titleY+titleHeight, UIScreenWidth, UIScreenHeight-titleHeight)
 #define  kUTTypeImage @".png"
@@ -31,7 +33,17 @@
 @synthesize backBtn = _backBtn;
 @synthesize titleValue = _titleValue;
 //@synthesize block;
++(ChatViewController *)sharedInstance
+{
+    static ChatViewController *chatviewController;
+    static dispatch_once_t chatviewControlleronce;
+    dispatch_once(&chatviewControlleronce, ^{
+        chatviewController = [[ChatViewController alloc] init];
+    });
+    return chatviewController;
 
+
+}
 -(instancetype)init{
 
     self = [super init];
@@ -54,7 +66,25 @@
     }
 }
 */
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableView:) name:KNOTIFICATION_onMesssageChanged object:nil];
+    NSMutableArray *mArray =[NSMutableArray array];
+    mArray = [DeviceDelegateHelper sharedInstance].receiveArray;
+    for (NSString *str in mArray) {
+        [self addReceiveMessageWithContent:str time:nil];
+        // 2、刷新表格
+        [chatTableView reloadData];
+        
+        // 3、滚动至当前行
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessagesFrame.count - 1 inSection:0];
+        [chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        // 4、清空文本框内容
+        _keyBorad.sendMessageField.text = nil;
+        
+    }
+}
 -(void)viewDidLoad{
     
     [self hideTabBar]; //隐藏tabBar
@@ -100,14 +130,14 @@
 //    [chatView addSubview:cRV];
     
     //    添加键盘视图
-    keyBorad = [[KeyBoradView alloc]initWithFrame: KeyBoradNormalFrame];
-    keyBorad.backgroundColor = [UIColor clearColor];
-    keyBorad.delegate = self;
-    keyBorad.sendMessageField.delegate = self;
-    keyBorad.contentView.delegate= self;
-    keyBorad.voiceBtn.delegate = self;
-    keyBorad.picBtn.delegate = self;
-    keyBorad.faceBtn.delegate = self;
+    _keyBorad = [[KeyBoradView alloc]initWithFrame: KeyBoradNormalFrame];
+    _keyBorad.backgroundColor = [UIColor clearColor];
+    _keyBorad.delegate = self;
+    _keyBorad.sendMessageField.delegate = self;
+    _keyBorad.contentView.delegate= self;
+    _keyBorad.voiceBtn.delegate = self;
+    _keyBorad.picBtn.delegate = self;
+    _keyBorad.faceBtn.delegate = self;
     
 
 //    player =  [[AVAudioPlayer alloc]init];
@@ -119,7 +149,7 @@
 //    设置textField输入起始位置
 
 //    [keyBorad.voiceBtn addTarget:self action:@selector(voicBtnByClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:keyBorad];
+    [self.view addSubview:_keyBorad];
     
     
 //tableView begin===============************************************===============================
@@ -253,7 +283,7 @@
     //上移30个单位，按实际情况设置
     //    CGRect rect=CGRectMake(0.0f,-30,width,height);
     //    sendView.frame=rect;
-    keyBorad.frame = KeyBoradTextSelectedFrame;
+    _keyBorad.frame = KeyBoradTextSelectedFrame;
     chatTableView.frame = contentViewTextSelectFrame;
     [UIView commitAnimations];
     
@@ -330,7 +360,7 @@
 -(void)addTalkData{
     // 1、增加数据源
     
-    NSString *content = keyBorad.sendMessageField.text;
+    NSString *content = _keyBorad.sendMessageField.text;
     
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
     NSDate *date = [NSDate date];
@@ -344,15 +374,33 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessagesFrame.count - 1 inSection:0];
     [chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     // 4、清空文本框内容
-    keyBorad.sendMessageField.text = nil;
+    _keyBorad.sendMessageField.text = nil;
 }
 
 
+-(void)sendMessage
+{
+    NSString * textString = _keyBorad.sendMessageField.text;
+    if (textString.length == 0) {
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:nil message:@"不能发送空白消息" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    NSString * to =@"88750900000045";
+    //loginInfo.username = @"88750900000016";
+    //loginInfo.username = @"88750900000045";
+    ECMessage* message = [[DeviceChatHelper sharedInstance] sendTextMessage:textString to:to];
+    [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_onMesssageChanged object:message];
+
+}
 #pragma mark 给数据源增加内容
 //text by add
 - (void)addMessageWithContent:(NSString *)content time:(NSString *)time{
     
     NSLog(@"test %@",content);
+    if (content.length == 0) {
+        return;
+    }
     MessageFrame *mf = [[MessageFrame alloc] init];
     Message *msg = [[Message alloc] init];
     msg.content = content;
@@ -365,6 +413,22 @@
     
     [_allMessagesFrame addObject:mf];
 }
+- (void)addReceiveMessageWithContent:(NSString *)content time:(NSString *)time{
+    
+    NSLog(@"test %@",content);
+    MessageFrame *mf = [[MessageFrame alloc] init];
+    Message *msg = [[Message alloc] init];
+    msg.content = content;
+    msg.time = time;
+    msg.icon = @"1.jpg";
+    msg.type = MessageTypeOther;
+    msg.showType = MessageShowTypeText;
+    msg.isCurrentSend = YES; //连网测试
+    mf.message = msg;
+    
+    [_allMessagesFrame addObject:mf];
+}
+
 
 //img by add
 - (void)addMessageWithImg:(NSString *)content time:(NSString *)time{
@@ -529,13 +593,13 @@
 //恢复原始视图位置
 -(void)resumeView
 {
-    [keyBorad.sendMessageField resignFirstResponder];
+    [_keyBorad.sendMessageField resignFirstResponder];
     NSLog(@"resumeView...");
     CGRect rect=KeyBoradNormalFrame;
-    keyBorad.frame=rect;
+    _keyBorad.frame=rect;
     chatTableView.frame =contentViewNormalFrame;
 //    -(void)changeImg:(ButtonState)keyBoradState;
-    [keyBorad changeImg:button_state_none
+    [_keyBorad changeImg:button_state_none
      ];
 //    [keyBorad cl];
 }
@@ -559,7 +623,7 @@
     //上移30个单位，按实际情况设置
 //    CGRect rect=CGRectMake(0.0f,-30,width,height);
 //    sendView.frame=rect;
-    keyBorad.frame = KeyBoradSelectedFrame;
+    _keyBorad.frame = KeyBoradSelectedFrame;
     chatTableView.frame = contentViewSelectFrame;
     [UIView commitAnimations];
 //    [chatTableView reloadData];
@@ -572,7 +636,7 @@
 
 #pragma mark 点击textField键盘的回车按钮
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    
+    [self sendMessage];
     [self addTalkData];
     return YES;
     
@@ -643,7 +707,7 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessagesFrame.count - 1 inSection:0];
     [chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     // 4、清空文本框内容
-    keyBorad.sendMessageField.text = nil;
+    _keyBorad.sendMessageField.text = nil;
 }
 
 -(void)keyBoradPicForData:(NSData*)data ForType:(DataType)dataType{
@@ -689,7 +753,7 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessagesFrame.count - 1 inSection:0];
     [chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     // 4、清空文本框内容
-    keyBorad.sendMessageField.text = nil;
+    _keyBorad.sendMessageField.text = nil;
 //    
 //    UIImageView* img = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
 //    img.image = [UIImage imageNamed:@"biaoQing1.png"];
@@ -717,7 +781,7 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessagesFrame.count - 1 inSection:0];
     [chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     // 4、清空文本框内容
-    keyBorad.sendMessageField.text = nil;
+    _keyBorad.sendMessageField.text = nil;
     //
     //    UIImageView* img = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     //    img.image = [UIImage imageNamed:@"biaoQing1.png"];
@@ -746,7 +810,7 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessagesFrame.count - 1 inSection:0];
     [chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     // 4、清空文本框内容
-    keyBorad.sendMessageField.text = nil;
+    _keyBorad.sendMessageField.text = nil;
     //
     //    UIImageView* img = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
     //    img.image = [UIImage imageNamed:@"biaoQing1.png"];
@@ -775,7 +839,7 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessagesFrame.count - 1 inSection:0];
     [chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     // 4、清空文本框内容
-    keyBorad.sendMessageField.text = nil;
+    _keyBorad.sendMessageField.text = nil;
 
 //    NSLog(@"keyBoradDelegate...sucess .it is in ChatViewController.");
 }
@@ -801,7 +865,7 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessagesFrame.count - 1 inSection:0];
     [chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     // 4、清空文本框内容
-    keyBorad.sendMessageField.text = nil;
+    _keyBorad.sendMessageField.text = nil;
     
     //    NSLog(@"keyBoradDelegate...sucess .it is in ChatViewController.");
     
@@ -809,10 +873,10 @@
 
 -(void)moveButtonState:(NSString *)state{
 
-    [keyBorad.sendMessageField resignFirstResponder];
+    [_keyBorad.sendMessageField resignFirstResponder];
     NSLog(@"resumeView...");
     CGRect rect=KeyBoradNormalFrame;
-    keyBorad.frame=rect;
+    _keyBorad.frame=rect;
     chatTableView.frame =contentViewNormalFrame;
     
     NSLog(@"change..");
@@ -827,6 +891,25 @@
 //    [player play];
     
 }
+-(void)refreshTableView:(NSNotification*)notification{
+    
+    NSMutableArray *mArray =[NSMutableArray array];
+    mArray = [DeviceDelegateHelper sharedInstance].onReceiveArray;
+    for (NSString *str in mArray) {
+        [self addReceiveMessageWithContent:str time:nil];
+        // 2、刷新表格
+        [chatTableView reloadData];
+        
+        // 3、滚动至当前行
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessagesFrame.count - 1 inSection:0];
+        [chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        // 4、清空文本框内容
+        _keyBorad.sendMessageField.text = nil;
+        
+    }
+    [mArray removeAllObjects];
+}
+
 
 
 @end

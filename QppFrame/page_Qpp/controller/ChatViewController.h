@@ -30,7 +30,7 @@
     
     
     UITableView* chatTableView;
-    KeyBoradView* keyBorad;
+    
     
     NSMutableArray  *_allMessagesFrame;
     NSString* filePath;
@@ -46,6 +46,8 @@
 
 @property (strong,nonatomic)UIButton* backBtn;
 @property(strong,nonatomic)NSString* titleValue;
+@property(strong,nonatomic)KeyBoradView* keyBorad;
++(ChatViewController *)sharedInstance;
 //传值 begin
 //SecondViewController.h
 //typedef void (^ablock)(NSString *str);
