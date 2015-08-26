@@ -85,9 +85,7 @@ static AppDelegate *shareAppDel = nil;
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error1]; [session setActive:YES error:&error1];
     
-
-    UserInfoDAO* dao = [[UserInfoDAO alloc]init];
-    [dao getCurrentUserInfo];
+    
     
     return YES;
 }
