@@ -12,7 +12,7 @@
 #import "ZhuCeViewController.h"
 #import "ServerConnect.h"
 #import "XWAlterview.h"
-
+#import "ECDeviceHeaders.h"
 #define loginHeight 100
 #define loginWeight 100
 
@@ -107,11 +107,30 @@
 -(void)click:(id)sender{
 
 //    if ([self login]) {
-        TabBarViewController  *tabBar = [[TabBarViewController alloc]init];
-        [self presentModalViewController:tabBar animated:YES];
-        NSLog(@"click...");
+        ECLoginInfo * loginInfo = [[ECLoginInfo alloc] init];
+       // loginInfo.username = userName.text;
+        loginInfo.username = @"88750900000016";
+        //loginInfo.username = @"88750900000045";
+        loginInfo. userPassword= pwdName.text;
         
+        loginInfo.appKey = @"8a48b5514ecd7fa8014edc9c8ade1530";
         
+        loginInfo.appToken = @"698e8062488dcd0f9ac6e9f5db5cddbf";
+        loginInfo.authType = LoginAuthType_NormalAuth;//默认方式登录
+        loginInfo.mode = LoginMode_InputPassword;
+        //                loginInfo.authType = LoginAuthType_PasswordAuth;//密码方式登录
+        //                loginInfo.mode = LoginMode_InputPassword;
+        [[ECDevice sharedInstance] login:loginInfo completion:^(ECError *error){
+            if (error.errorCode == ECErrorType_NoError) {
+                //登录成功
+                NSLog(@"登陆成功");
+                TabBarViewController  *tabBar = [[TabBarViewController alloc]init];
+                [self presentModalViewController:tabBar animated:YES];
+            }else{
+                //登录失败
+                NSLog(@"登陆失败");
+            }
+        }];
 //    }
 }
 
