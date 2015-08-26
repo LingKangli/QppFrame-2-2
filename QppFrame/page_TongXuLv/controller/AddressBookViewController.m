@@ -8,6 +8,9 @@
 
 #import "AddressBookViewController.h"
 #import "Utill.h"
+#import "UserInfoDAO.h"
+#import "ChineseString.h"
+#import "ChatViewController.h"
 
 @interface AddressBookViewController ()
 
@@ -24,6 +27,7 @@
     
     [self hideNavBar];
     
+    /*
     headerTitles = [[NSArray alloc]initWithObjects:@"a", @"b", @"c", @"d",@"e",@"f",@"g",@"h",@"j",@"k",@"l",@"m",@"n",@"o", nil];
     contentTitles =  [[NSArray alloc] initWithObjects:
                       [NSArray arrayWithObjects:@"aa", @"ab", nil],
@@ -49,8 +53,31 @@
                       
                       [NSArray arrayWithObjects:@"oa", @"ob", @"oc", @"od", nil],
                       nil];
+    */
+    
+    UserInfoDAO* dao = [[UserInfoDAO alloc]init];
+//    contentTitles = [dao getUserFriends];
+//    NSMutableArray* friendsInfos = [[NSMutableArray alloc]init];
+//    friendsInfos = [dao getUserFriends];
+    
+    NSMutableArray*friendsInfos = [dao getUserFriends];
+    
 
-    return self;
+    for (int i = 0 ; i < [friendsInfos count]; i++) {
+        contentTitles =[ChineseString LetterSortArray:friendsInfos];
+        headerTitles = [ChineseString IndexArray:friendsInfos];
+        
+    }
+/*
+//    headerTitles = [[NSMutableArray alloc]init];
+    for (int i = 0; i < [contentTitles count]; i++) {
+        NSLog(@"test is %@",((AsFrindInfo*)[contentTitles objectAtIndex:i]).userName);
+        NSString* str =((AsFrindInfo*)[contentTitles objectAtIndex:i]).userName;
+        NSLog(@"[str substringToIndex:1] is %@",[str substringToIndex:1]);
+        [headerTitles addObject:[str substringToIndex:1]];
+        
+    }*/
+       return self;
 }
 
 - (void)viewDidLoad {
@@ -60,7 +87,6 @@
     [self hideNavBar];
     
     self.view.backgroundColor = BackColor;
-    
     
     //title
     UILabel* QppTitle = [[UILabel alloc]initWithFrame:CGRectMake(UIScreenWidth/2-20, 7, 50, 60)];
@@ -78,7 +104,6 @@
     UIImageView* imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, addPerson.frame.origin.y+addPerson.frame.size.height+5, UIScreenWidth, 0.3)];
     imageView.image = [UIImage imageNamed:@"line.png"];
     [self.view addSubview:imageView];
-    
     
     UISearchBar* search  = [[UISearchBar alloc]init];
     search.delegate = self;
@@ -110,6 +135,7 @@
     [self.view addSubview:lineImageView];
 }
 
+
 -(void)clickBtn{
     if (!isAdd) {
         
@@ -136,6 +162,76 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+#pragma mark -Section的Header的值
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSString *key = [headerTitles objectAtIndex:section];
+    return key;
+}
+#pragma mark - Section header view
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    lab.backgroundColor = [UIColor grayColor];
+    lab.text = [headerTitles objectAtIndex:section];
+    lab.textColor = [UIColor whiteColor];
+    return lab;
+}
+#pragma mark - row height
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 65.0;
+}
+
+#pragma mark -
+#pragma mark Table View Data Source Methods
+#pragma mark -设置右方表格的索引数组
+-(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    return headerTitles;
+}
+
+#pragma mark -
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+{
+    return index;
+}
+
+#pragma mark -允许数据源告知必须加载到Table View中的表的Section数。
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [headerTitles count];
+}
+#pragma mark -设置表格的行数为数组的元素个数
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [[contentTitles objectAtIndex:section] count];
+}
+#pragma mark -每一行的内容为数组相应索引的值
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
+    cell.textLabel.text = [[contentTitles objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
+    return cell;
+}
+#pragma mark - Select内容为数组相应索引的值
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"---->%@",[[contentTitles objectAtIndex:indexPath.section]objectAtIndex:indexPath.row]);
+    
+    ChatViewController* chatCV = [[ChatViewController alloc]init];
+    chatCV.titleValue =[[contentTitles objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:chatCV animated:YES];
+   
+}
+/*
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     //tableView 设置
     
@@ -151,10 +247,16 @@
         
         NSLog(@"indexPath.section:%i,indexPath.row:%i",indexPath.section,indexPath.row);
     }
-    cell.textLabel.text = [[contentTitles objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
+//    cell.textLabel.text = [[contentTitles objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
+//    cell.textLabel.text = [contentTitles objectAtIndex:indexPath.section];
+    NSLog(@"the indexpath.row:%i",indexPath.row);
+//    cell.textLabel.text = [contentTitles objectAtIndex:indexPath.row];
+    cell.textLabel.text = ((AsFrindInfo*)[contentTitles objectAtIndex:indexPath.row]).userName;
+    NSLog(@"the text is %@",cell.textLabel.text);
     
     return cell;
 }
+
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
   
 
@@ -166,8 +268,9 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
-    return [[contentTitles objectAtIndex:section] count];
+
+//    return [[contentTitles objectAtIndex:section] count];
+    return [contentTitles count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -195,7 +298,7 @@
 //设置tableView索引
 //添加索引列
 
-
+/*
 -(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 
 {
@@ -221,12 +324,12 @@
  
     NSInteger count = 0;
     
-    for (NSString* character in headerTitles) {
-        if ([character isEqualToString:title]) {
-            return count;
-        }
-        count++;
-    }
+//    for (NSString* character in headerTitles) {
+//        if ([character isEqualToString:title]) {
+//            return count;
+//        }
+//        count++;
+//    }
     return 0;
     /*
     NSLog(@"===%@  ===%d",title,index);
@@ -243,8 +346,9 @@
     
     return index+4;
      */
-    
+   /*
 }
+*/
 /*
 #pragma mark - Navigation
 

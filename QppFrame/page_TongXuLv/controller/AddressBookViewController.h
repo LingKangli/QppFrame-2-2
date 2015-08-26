@@ -9,16 +9,23 @@
 #import <UIKit/UIKit.h>
 #import "BaseUIViewController.h"
 #import "popView.h"
+#import "AsFrindInfo.h"
+
+//@protocol sendValueDelegate <NSObject>
+//
+//-(void)sendMessage:(AsFrindInfo*)message;
+//
+//@end
 
 @interface AddressBookViewController : BaseUIViewController<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate>{
     
-    NSArray* headerTitles;
-    NSArray* contentTitles;
+    NSMutableArray* headerTitles;
+    NSMutableArray* contentTitles;
     BOOL isAdd;
     PopView* popView;
     
 }
 
 @property (strong,nonatomic)UITableView* tableView;
-
+//@property (strong,nonatomic)id<sendValueDelegate> delegate;
 @end
