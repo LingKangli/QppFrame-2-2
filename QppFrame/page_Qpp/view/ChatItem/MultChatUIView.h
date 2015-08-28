@@ -20,11 +20,12 @@
 @end
 
 @interface MultChatUIView : UIControl
-<VoiceDelegate>{
+<VoiceDelegate,multchatPlayerMovedDelegate>{
 
 //    MultChatObj* chatObj;//存放需要传到前一页面的数据《图片，Ｎ个ＵＲＬ，Ｎ个坐标》
 //
     UIImageView* chatBGImg;//背景图片
+    UIView* bgView;
     UIImageView* voiceImg;
     NSURL* currentUrl ;//长按后录音路径
     NSTimer* timer;
@@ -32,6 +33,10 @@
    
     MultChatObj* thisPageData;
     NSArray* multArray;
+    NSInteger number;
+    
+    BOOL flag;//end 之前 begin是否在范围内
+    
 }
 
 @property(nonatomic)UIImage* backgroundImg;

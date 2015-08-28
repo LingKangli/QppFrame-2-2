@@ -43,7 +43,9 @@
 
 -(void)initial{
     self.frame = CGRectMake(0, 0, UIScreenWidth, UIScreenHeight);
+    number = 0;
     [self setViewFrame];
+    
 }
 
 -(void)setViewFrame{
@@ -52,7 +54,8 @@
     
     UIView* titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*0.1)];
     titleView.backgroundColor = [UIColor redColor];
-    [self addSubview:titleView];
+//    [self addSubview:titleView];
+    [self insertSubview:titleView atIndex:1];
     
     UIButton* backBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 30, self.frame.size.width*0.2, self.frame.size.height*0.05)];
     [backBtn setTitle:@"取消" forState:UIControlStateNormal];
@@ -70,19 +73,26 @@
     title.font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
     [titleView addSubview:title];
     
-    chatBGImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, titleView.frame.origin.y+titleView.frame.size.height+10, self.frame.size.width, 250)];
-    chatBGImg.tag = 1;
-    [self addSubview:chatBGImg];
+    bgView = [[UIView alloc]initWithFrame:CGRectMake(0,titleView.frame.origin.y+titleView.frame.size.height, self.frame.size.width, UIScreenHeight-2*(titleView.frame.size.height+titleView.frame.origin.y))];
+    bgView.backgroundColor = [UIColor greenColor];
+    bgView.tag = 2;
+    [self insertSubview:bgView belowSubview:titleView];
     
-//    UIView* bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.frame.size.height-titleView.frame.size.height, self.frame.size.width, self.frame.size.height*0.1)];
-//    bottomView.backgroundColor = [UIColor redColor];
-//    [self addSubview:bottomView];
+//    chatBGImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, titleView.frame.origin.y+titleView.frame.size.height, self.frame.size.width, UIScreenHeight-2*(titleView.frame.size.height+titleView.frame.origin.y))];
+    
+    chatBGImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, bgView.frame.size.width, bgView.frame.size.height)];
+    chatBGImg.tag = 1;
+    [bgView addSubview:chatBGImg];
     
     voiceImg = [[UIImageView alloc]initWithFrame:voiceFrame];
     [[[UIApplication sharedApplication] keyWindow] addSubview:voiceImg];//将图片添加到当前窗口。
 
     thisPageData = [[MultChatObj alloc]init];
     thisPageData.voiceArray = [[NSMutableArray alloc]init];
+
+    UIView* bottomBg = [[UIView alloc]initWithFrame:CGRectMake(0, bgView.frame.origin.y+bgView.frame.size.height, UIScreenWidth, 2*(bgView.frame.size.height-titleView.frame.size.height))];
+    bottomBg.backgroundColor = [UIColor redColor];
+    [self insertSubview:bottomBg aboveSubview:bgView];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -100,20 +110,65 @@
     */
     
     UITouch *touch = [touches anyObject];
-    CGPoint point = [touch  locationInView:self];
+    CGPoint point = [touch locationInView:self];
     
     if([self isContains:touches]){
+        flag = YES;
+        
         [self setUrl];
         [self setRecorder];
         
         MultChatPlayer* player = [[MultChatPlayer alloc]initWithFrame:CGRectMake(point.x, point.y, playerWidth, playerWidth)];
         player.playerImg = [UIImage imageNamed:@"myVoice.png"];
         player.point = point;
-        player.center = point;
         player.playUrl = currentUrl;//播放声音地址
-        [self addSubview:player];
+        player.tag = number++;
+        NSLog(@"the tag is %i",player.tag);
+        player.delegate = self;
+        player.center =CGPointMake(point.x+bgView.frame.origin.x, point.y-bgView.frame.origin.y);
+        [bgView addSubview:player];
         [thisPageData.voiceArray addObject:player];
-        
+        ;
+    }else{
+        flag = NO;
+        NSLog(@"test ..touch out.");
+    }
+    
+//    if (voiceImg != nil && ![self isContains:touches]) {
+//        [self stopRecordVoice];
+//        [self stopCountTime];
+//        [timer invalidate];
+//    }
+    
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    if([self isContains:touches] && flag ){
+        [self stopRecordVoice];
+        [self stopCountTime];
+        [timer invalidate];
+    }else{
+        NSLog(@"test ..touch out.");
+    }
+}
+
+-(void)multChatPlayerMove:(CGPoint)centerP OfTag:(NSInteger)tag{
+
+    NSLog(@"delegate tag is %d",tag);
+    NSLog(@"delegate this point is %f",centerP.x);
+    NSLog(@"delegate this point is %f",centerP.y);
+
+    NSLog(@"moved center point.x :%f  point.y: %f",    ((MultChatPlayer*)[thisPageData.voiceArray objectAtIndex:tag]).center.x,((MultChatPlayer*)[thisPageData.voiceArray objectAtIndex:tag]).center.y);
+ }
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
+    NSLog(@"touch moved.");
+    UITouch* touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self];
+    
+    if([self isContains:touches] && flag){
+      ((MultChatPlayer*)[thisPageData.voiceArray objectAtIndex:([thisPageData.voiceArray count]-1)]).center = CGPointMake(point.x+bgView.frame.origin.x, point.y-bgView.frame.origin.y);
     }
 }
 
@@ -174,6 +229,8 @@
     timer = [NSTimer  timerWithTimeInterval:0 target:self selector:@selector(detectionVoice)userInfo:nil repeats:YES];
     
     [[NSRunLoop  currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+    
+    
 }
 
 
@@ -202,22 +259,14 @@
     }
 }
 
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-    
-    if([self isContains:touches]){
-        [self stopRecordVoice];
-        [self stopCountTime];
-        [timer invalidate];
-    }
-   
-}
+
 
 -(BOOL)isContains:(NSSet *)touches {
     
     UITouch* touch = [touches anyObject];
     CGPoint point = [touch locationInView:self];
     
-    CGRect rect = CGRectMake(0, chatBGImg.frame.origin.y, UIScreenWidth,  self.frame.size.height-chatBGImg.frame.origin.y);
+    CGRect rect = bgView.frame;
    
     if (CGRectContainsPoint(rect, point)) {
         return YES;
@@ -228,13 +277,16 @@
 
 -(void) stopRecordVoice{
     double theTime = _recorder.currentTime;
-    
+    [_recorder stop];
+
     if (theTime> 0.2) {//如果录制时间>2 发送
         NSLog(@"发出去");
         //        [self.delegate sucessRecorder:_recorder.url];
         //        -(void)sucessRecorder:(NSURL*)filePath andPicPath:(NSURL*) imgPath;
-        
+//        ((MultChatPlayer*)[thisPageData.voiceArray objectAtIndex:([thisPageData.voiceArray count]-1)]).center =;
+
         if (voiceImg) {
+            
             NSLog(@"imageNormal.");
             //            -(void)sucessRecorder:(NSURL*)filePath andPic:(UIImage*) img;
 //            [self.delegate sucessRecorder:_recorder.url andPic:_imgNormal];
@@ -249,11 +301,11 @@
     }else {
         //删除记录的文件
         [_recorder deleteRecording];
+        [(MultChatPlayer*)[thisPageData.voiceArray objectAtIndex:([thisPageData.voiceArray count]-1)] removeFromSuperview];
+        [thisPageData.voiceArray removeObjectAtIndex:([thisPageData.voiceArray count]-1)] ;
+        
         //删除存储的
     }
-    [_recorder stop];
-    //    [timer setFireDate:[NSDate distantFuture]];
-    //    [timer invalidate];
 }
 -(void)stopCountTime{
     //    [timer setFireDate:[NSDate distantFuture]];
@@ -274,13 +326,21 @@
 
     chatBGImg.image = multChatObj.chatBgImg;
     thisPageData.chatBgImg = chatBGImg.image;
+    thisPageData.voiceArray = [[NSMutableArray alloc]init];
+    NSLog(@"回来了 center point.x :%f  point.y: %f",    ((MultChatPlayer*)[multChatObj.voiceArray objectAtIndex:1]).center.x,((MultChatPlayer*)[multChatObj.voiceArray objectAtIndex:1]).center.y);
 
     for (int i = 0; i < [multChatObj.voiceArray count]; i++) {
         MultChatPlayer* player = (MultChatPlayer*)[multChatObj.voiceArray objectAtIndex:i];
-        player.center = player.point;
-        player.frame = player.frame;
-        [player setImage:player.playerImg forState:UIControlStateNormal];
-        [self addSubview:player];
+        player.center = ((MultChatPlayer*)[multChatObj.voiceArray objectAtIndex:i]).center;
+        player.frame = ((MultChatPlayer*)[multChatObj.voiceArray objectAtIndex:i]).frame;
+        [player setImage:((MultChatPlayer*)[multChatObj.voiceArray objectAtIndex:i]).playerImg forState:UIControlStateNormal];
+        
+        NSLog(@"回来了for center point.x :%f  point.y: %f", player.center.x,player.center.y);
+
+        
+//        [self addSubview:player];
+        [bgView insertSubview:player atIndex:20];
+
         [thisPageData.voiceArray addObject:player];
     }
 //    for (MultChatPlayer* player in multChatObj.voiceArray) {
@@ -302,6 +362,7 @@
 
 -(void)clickRightBtn{
     
+    NSLog(@"完了 center point.x :%f  point.y: %f",    ((MultChatPlayer*)[thisPageData.voiceArray objectAtIndex:1]).center.x,((MultChatPlayer*)[thisPageData.voiceArray objectAtIndex:1]).center.y);
     [self.delegate backFontPageImg:chatBGImg.image WithMultObj:thisPageData];
     [self removeFromSuperview];
 }
