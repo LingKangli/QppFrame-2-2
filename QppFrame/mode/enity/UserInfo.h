@@ -9,11 +9,19 @@
 #import <Foundation/Foundation.h>
 
 @interface UserInfo : NSObject
+
 @property(nonatomic)NSString* userImg;
 @property(nonatomic)NSString* userName;
-@property(nonatomic)NSInteger userID;
 @property(nonatomic)NSString* userPwd;
 @property(nonatomic)NSString* userEmail;
+@property(nonatomic)NSString* userToken;
+@property(nonatomic)NSString* userYunID;
+@property(nonatomic)NSString* userYunPwd;
+@property(nonatomic)NSString* userYunAccountSid;
+@property(nonatomic)NSString* userYunToken;
+@property(nonatomic)NSString* userYundateCreate;
 
+//@property(nonatomic)NSString* 
 +(UserInfo*)sharedUserInfo;
+
 @end

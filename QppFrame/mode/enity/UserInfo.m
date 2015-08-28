@@ -10,11 +10,17 @@
 static UserInfo* user = nil;
 @implementation UserInfo
 
-@synthesize userID = _userID;
+//@synthesize userID = _userID;
 @synthesize userImg = _userImg;
 @synthesize userName =_userName;
 @synthesize userPwd = _userPwd;
 @synthesize userEmail = _userEmail;
+@synthesize userToken = _userToken;
+@synthesize userYunID = _userYunID;
+@synthesize userYunPwd = _userYunPwd;
+@synthesize userYunAccountSid = _userYunAccountSid;
+@synthesize userYunToken = _userYunToken;
+@synthesize userYundateCreate = _userYundateCreate;
 
 +(UserInfo*)sharedUserInfo{
 

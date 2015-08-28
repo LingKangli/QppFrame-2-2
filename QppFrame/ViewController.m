@@ -13,6 +13,10 @@
 #import "ServerConnect.h"
 #import "XWAlterview.h"
 #import "ECDeviceHeaders.h"
+
+#import "ApplicationInfo.h"
+#import "AppDelegate.h"
+
 #define loginHeight 100
 #define loginWeight 100
 
@@ -105,21 +109,18 @@
 }
 
 -(void)click:(id)sender{
-
-//    if ([self login]) {
+    if ([self login]) {
         ECLoginInfo * loginInfo = [[ECLoginInfo alloc] init];
-       // loginInfo.username = userName.text;
-        loginInfo.username = @"88750900000016";
+        loginInfo.username = [ApplicationInfo sharedApplicationInfo].userName;
         //loginInfo.username = @"88750900000045";
-        loginInfo. userPassword= pwdName.text;
+        loginInfo.userPassword= [ApplicationInfo sharedApplicationInfo].userPwd;
         
-        loginInfo.appKey = @"8a48b5514ecd7fa8014edc9c8ade1530";
+        loginInfo.appKey = AppKey;
+        loginInfo.appToken =AppToken;
         
-        loginInfo.appToken = @"698e8062488dcd0f9ac6e9f5db5cddbf";
         loginInfo.authType = LoginAuthType_NormalAuth;//默认方式登录
         loginInfo.mode = LoginMode_InputPassword;
-        //                loginInfo.authType = LoginAuthType_PasswordAuth;//密码方式登录
-        //                loginInfo.mode = LoginMode_InputPassword;
+
         [[ECDevice sharedInstance] login:loginInfo completion:^(ECError *error){
             if (error.errorCode == ECErrorType_NoError) {
                 //登录成功
@@ -131,7 +132,12 @@
                 NSLog(@"登陆失败");
             }
         }];
-//    }
+
+   
+    TabBarViewController  *tabBar = [[TabBarViewController alloc]init];    
+    [self presentModalViewController:tabBar animated:YES];
+    
+    }
 }
 
 -(BOOL)login{
@@ -139,6 +145,13 @@
 
     if ([[infoDic objectForKey:@"result"] integerValue]==0) {
         NSLog(@"you are right.");
+        ApplicationInfo* applicationInfo = [ApplicationInfo sharedApplicationInfo];
+        NSDictionary* infovalueDic = [infoDic objectForKey:@"data"];
+        applicationInfo.userName = [infovalueDic objectForKey:@"voipAccount"];
+        applicationInfo.userPwd = [infovalueDic objectForKey:@"voipPwd"];
+        applicationInfo.appkey = [infovalueDic objectForKey:@"subAccountSid"];
+        applicationInfo.appToken = [infovalueDic objectForKey:@"subToken"];
+ 
         return YES;
     }else{
         NSLog(@"you are wrong");
