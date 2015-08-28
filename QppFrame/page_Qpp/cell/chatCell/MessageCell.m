@@ -150,12 +150,11 @@
 
     MultChatUIView* mCUI = [[MultChatUIView alloc]initWithFrame:CGRectMake(0, 0, UIScreenWidth, UIScreenHeight)];
 //    view.backgroundColor = [UIColor redColor];
-    mCUI.delegate = self;
     [mCUI setMultChatObjToView:message.mCObj];
+    mCUI.delegate = self;
     [[[UIApplication sharedApplication]keyWindow] addSubview:mCUI];
 //    MultChatUIView* mCUI = [[MultChatUIView alloc]init];
 //    [mCUI setMultChatObjToView:message.mCObj];
-    
     
     NSLog(@"MultChatObj");
 }
