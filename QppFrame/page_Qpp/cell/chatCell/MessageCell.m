@@ -442,37 +442,18 @@
     NSLog(@"message:%@",message);
 }
 -(void)setImageAndVoice:(Message*)message{
-    
-    //    [_contentBtn setTitle:message.content forState:UIControlStateNormal];
     _voiceBtn = [[UIButton alloc]init];
     _voiceBtn.frame = _messageFrame.voiceF;
     [_voiceBtn setImage:[UIImage imageNamed:@"voice@2x.png"] forState:UIControlStateNormal];
-    [_voiceBtn addTarget:self action:@selector(voiceBtn:) forControlEvents:UIControlEventTouchUpInside];
-    //    player = [[UUAVAudioPlayer alloc]initWithContentsOfURL:_messageFrame.message.voicePath error:nil];
-    //    player.delegate = self;
-    
-    [self.contentView addSubview:_voiceBtn];
-    
-    //    lingkangli begin
-    //    if(!contentVoiceIsPlaying){
-    //        [[NSNotificationCenter defaultCenter] postNotificationName:@"VoicePlayHasInterrupt" object:nil];
     contentVoiceIsPlaying = YES;
     audio = [UUAVAudioPlayer sharedInstance];
-    //        audio.delegate = self;
-    //        [audio playSongWithUrl:voiceURL];
-    //        [audio playSongWithUrl: message.voicePath];
-    //    }else{
-    //        [self UUAVAudioPlayerDidFinishPlay];
-    //    }
-    //    lingkangli end
-    
+    [_voiceBtn addTarget:self action:@selector(voiceBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:_voiceBtn];
+   
     [_contentBtn setImageForPath:message.content];
-//    [_contentBtn setImage:[UIImage imageWithContentsOfFile:message.content] forState:UIControlStateNormal];
     
     NSLog(@"mes content:%@",message.content);
     _contentBtn.frame = _messageFrame.contentF;
-    //  _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentLeft, kContentBottom, kContentRight);
-    
     if (message.type == MessageTypeMe) {
         _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentRight, kContentBottom, kContentLeft);
     }
@@ -480,31 +461,16 @@
 
     //     连网测试
     [self connectNetwork];
-    /*
-     UIImage *normal , *focused;
-     if (message.type == MessageTypeMe) {
-     
-     normal = [UIImage imageNamed:@"chatto_bg_normal.png"];
-     normal = [normal stretchableImageWithLeftCapWidth:normal.size.width * 0.5 topCapHeight:normal.size.height * 0.7];
-     focused = [UIImage imageNamed:@"chatto_bg_focused.png"];
-     focused = [focused stretchableImageWithLeftCapWidth:focused.size.width * 0.5 topCapHeight:focused.size.height * 0.7];
-     }else{
-     
-     normal = [UIImage imageNamed:@"chatfrom_bg_normal.png"];
-     normal = [normal stretchableImageWithLeftCapWidth:normal.size.width * 0.5 topCapHeight:normal.size.height * 0.7];
-     focused = [UIImage imageNamed:@"chatfrom_bg_focused.png"];
-     focused = [focused stretchableImageWithLeftCapWidth:focused.size.width * 0.5 topCapHeight:focused.size.height * 0.7];
-     
-     }
-     [_contentBtn setBackgroundImage:normal forState:UIControlStateNormal];
-     [_contentBtn setBackgroundImage:focused forState:UIControlStateHighlighted];
-     */
+   
     NSLog(@"message:%@",message);
 }
 
 -(void)voiceBtn:(id)sender{
 
-        [audio playSongWithUrl:_messageFrame.message.voicePath];
+//        [audio playSongWithUrl:_messageFrame.message.voicePath];
+    [audio playSongWithUrl:message.voicePath];
+    NSLog(@"play voice %@",message.voicePath);
+
 }
 
 -(void)connectNetwork{

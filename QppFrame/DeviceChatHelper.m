@@ -161,6 +161,8 @@
                     BOOL ret = [za UnzipFileTo:path overWrite:YES];
                     if (NO== ret){[za UnzipCloseFile];}
                     
+                    NSFileManager *fileManager = [[NSFileManager alloc]init];
+                    [fileManager removeItemAtPath:mediaBody.localPath error:nil];
                     NSString *imagePath;
                     NSString *voicePath;
                     for (NSString *str in za.filePath) {
