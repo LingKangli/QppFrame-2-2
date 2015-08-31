@@ -8,6 +8,7 @@
 
 #import "DeviceChatHelper.h"
 #import "ChatViewController.h"
+#import "ZipArchive.h"
 
 @implementation DeviceChatHelper
 {
@@ -77,125 +78,122 @@
 
     return message;
 }
-
--(ECMessage*)sendMediaMessage:(ECFileMessageBody*)mediaBody to:(NSString*)to isMcm:(BOOL)ismcm{
-    
-    ECMessage *message = [[ECMessage alloc] initWithReceiver:to body:mediaBody];
+-(ECMessage*)sendimageMessage:(NSString*)file displayName:(NSString *)displayname to:(NSString*)to
+{
+    ECImageMessageBody *messageBody = [[ECImageMessageBody alloc] initWithFile:file displayName:displayname];
+    ECMessage *message = [[ECMessage alloc] initWithReceiver:to body:messageBody];
     NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];
     NSTimeInterval tmp =[date timeIntervalSince1970]*1000;
     
 #warning 入库前设置本地时间，以本地时间排序和以本地时间戳获取本地数据库缓存数据
     message.timestamp = [NSString stringWithFormat:@"%lld", (long long)tmp];
     
-    if (ismcm) {
-        [[ECDevice sharedInstance].messageManager sendToDeskMessage:message progress:self completion:^(ECError *error, ECMessage *amessage) {
-            
-            if (error.errorCode == ECErrorType_NoError) {
-                [self playSendMsgSound];
-            } else if(error.errorCode == ECErrorType_Have_Forbid || error.errorCode == ECErrorType_File_Have_Forbid) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"您已被禁言" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alert show];
-            } else if (error.errorCode == ECErrorType_ContentTooLong) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:error.errorDescription delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alert show];
-            }
-            
-           
-            [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_SendMessageCompletion object:nil userInfo:@{KErrorKey:error, KMessageKey:amessage}];
-        }];
-    }else{
-        [[ECDevice sharedInstance].messageManager sendMessage:message progress:self completion:^(ECError *error, ECMessage *amessage) {
-            
-            if (error.errorCode == ECErrorType_NoError) {
-                [self playSendMsgSound];
-            } else if (error.errorCode == ECErrorType_Have_Forbid || error.errorCode == ECErrorType_File_Have_Forbid) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"您已被禁言" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alert show];
-            } else if (error.errorCode == ECErrorType_ContentTooLong) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:error.errorDescription delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alert show];
-            }
-            
-                        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_SendMessageCompletion object:nil userInfo:@{KErrorKey:error, KMessageKey:amessage}];
-        }];
-    }
     
-    NSLog(@"DeviceChatHelper sendMediaMessage messageid=%@",message.messageId);
-    
-    
+    [[ECDevice sharedInstance].messageManager sendMessage:message progress:nil completion:^(ECError *error,
+                                                                                            ECMessage *amessage) {
+        
+        if (error.errorCode == ECErrorType_NoError) {
+            //发送成功
+            NSLog(@"发送成功");
+        }else if(error.errorCode == ECErrorType_Have_Forbid || error.errorCode == ECErrorType_File_Have_Forbid)
+        {
+            //您已被群组禁言
+        }else{
+            //发送失败
+            NSLog(@"发送失败");
+        }
+    }];
     
     return message;
+
 }
-
--(void)downloadMediaMessage:(ECMessage*)message andCompletion:(void(^)(ECError *error, ECMessage* message))completion{
-    
-    ECFileMessageBody *mediaBody = (ECFileMessageBody*)message.messageBody;
-    mediaBody.localPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:mediaBody.displayName];
-        
-    [[ECDevice sharedInstance].messageManager downloadMediaMessage:message progress:self completion:^(ECError *error, ECMessage *message) {
-        if (error.errorCode == ECErrorType_NoError) {
-            
-        } else {
-                   }
-        
-        if (completion != nil) {
-            completion(error, message);
-        }
-        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_DownloadMessageCompletion object:nil userInfo:@{KErrorKey:error, KMessageKey:message}];
-
-    }];
-}
-
--(ECMessage*)resendMessage:(ECMessage*)message isMcm:(BOOL)ismcm{
-    
+-(ECMessage *)sendFileMessage:(NSString *)file displayname:(NSString *)displayname to:(NSString *)to
+{
+    ECFileMessageBody *messageBody = [[ECFileMessageBody alloc] initWithFile:file displayName:displayname];
+    ECMessage *message = [[ECMessage alloc] initWithReceiver:to body:messageBody];
     NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];
     NSTimeInterval tmp =[date timeIntervalSince1970]*1000;
     
-    if (message.messageBody.messageBodyType == MessageBodyType_Text) {
-        ECTextMessageBody *messageBody = (ECTextMessageBody *)message.messageBody;
-        messageBody.text = [ChatViewController sharedInstance].keyBorad.sendMessageField.text;
-    }
 #warning 入库前设置本地时间，以本地时间排序和以本地时间戳获取本地数据库缓存数据
     message.timestamp = [NSString stringWithFormat:@"%lld", (long long)tmp];
     
-    NSString *oldMsgId = message.messageId;
-    if (ismcm) {
-        message.messageId = [[ECDevice sharedInstance].messageManager sendToDeskMessage:message progress:self completion:^(ECError *error, ECMessage *amessage) {
-            
-            if (error.errorCode == ECErrorType_NoError) {
-                [self playSendMsgSound];
-            } else if (error.errorCode == ECErrorType_Have_Forbid || error.errorCode == ECErrorType_File_Have_Forbid) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"您已被禁言" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alert show];
-            } else if (error.errorCode == ECErrorType_ContentTooLong) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:error.errorDescription delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alert show];
-            }
-            
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_SendMessageCompletion object:nil userInfo:@{KErrorKey:error, KMessageKey:amessage}];
-        }];
-    } else {
-        message.messageId = [[ECDevice sharedInstance].messageManager sendMessage:message progress:self completion:^(ECError *error, ECMessage *amessage) {
-            
-            if (error.errorCode == ECErrorType_NoError) {
-                [self playSendMsgSound];
-            } else if (error.errorCode == ECErrorType_Have_Forbid || error.errorCode == ECErrorType_File_Have_Forbid) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"您已被禁言" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alert show];
-            } else if (error.errorCode == ECErrorType_ContentTooLong) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:error.errorDescription delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alert show];
-            }
-            
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_SendMessageCompletion object:nil userInfo:@{KErrorKey:error, KMessageKey:amessage}];
-        }];
-    }
     
-    //更新消息id
+    [[ECDevice sharedInstance].messageManager sendMessage:message progress:nil completion:^(ECError *error,
+                                                                                            ECMessage *amessage) {
+        
+        if (error.errorCode == ECErrorType_NoError) {
+            //发送成功
+            NSLog(@"发送成功");
+            NSFileManager *fileManager = [[NSFileManager alloc]init];
+            [fileManager removeItemAtPath:file error:nil];
+            
+        }else if(error.errorCode == ECErrorType_Have_Forbid || error.errorCode == ECErrorType_File_Have_Forbid)
+        {
+            //您已被群组禁言
+        }else{
+            //发送失败
+            NSLog(@"发送失败");
+        }
+    }];
     
-
-    return nil;
+    return message;
+    
+    
 }
+-(void)downloadMediaMessage:(ECMessage*)message andCompletion:(void(^)(ECError *error, ECMessage* message))completion{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *path = [paths objectAtIndex:0];
+    ECFileMessageBody *mediaBody = (ECFileMessageBody*)message.messageBody;
+    
+    mediaBody.localPath = [path stringByAppendingPathComponent:mediaBody.displayName];
+    NSLog(@"%@",mediaBody.localPath);
+    [[ECDevice sharedInstance].messageManager downloadMediaMessage:message progress:self completion:^(ECError *error, ECMessage *message) {
+        if (error.errorCode == ECErrorType_NoError) {
+            NSLog(@"下载成功%@",mediaBody.localPath);
+            
+            
+           
+              
+                
+                ZipArchive *za = [[ZipArchive alloc]init];
+            
+                if ([za UnzipOpenFile:mediaBody.localPath]) {
+                    BOOL ret = [za UnzipFileTo:path overWrite:YES];
+                    if (NO== ret){[za UnzipCloseFile];}
+                    
+                    NSString *imagePath;
+                    NSString *voicePath;
+                    for (NSString *str in za.filePath) {
+                        if ([str rangeOfString:@".gif"].location != NSNotFound) {
+                            imagePath = str;
+                        }
+                        if ([str rangeOfString:@".aac"].location != NSNotFound) {
+                            voicePath = str;
+                        }
+                        
+                    }
+                    
+                    
+                    
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_DownloadFileCompletion object:nil userInfo:@{@"image":imagePath,@"voice":voicePath}];
+                  
+                  
+                    
+                  
+              }
+                
+            
+
+        
+        }
+      
+      
+        
+    }];
+
+}
+
+
+
 @end

@@ -27,6 +27,7 @@ typedef enum {
     MessageShowTypeData = 3,
     MessageShowTypeImgVoiceByUIIMG = 4,
     MessageShowTypeMultChatImg = 5,
+    MessageShowTypeImageAndVoice = 6,
 } MessageShowType;
 
 

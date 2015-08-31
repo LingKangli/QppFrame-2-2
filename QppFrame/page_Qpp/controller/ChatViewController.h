@@ -47,6 +47,10 @@
 @property (strong,nonatomic)UIButton* backBtn;
 @property(strong,nonatomic)NSString* titleValue;
 @property(strong,nonatomic)KeyBoradView* keyBorad;
+//接收的图片和声音的路径
+@property (strong,nonatomic)NSMutableDictionary *dataDict;
+//图片路径
+@property(strong,nonatomic)NSString *filePath;
 +(ChatViewController *)sharedInstance;
 //传值 begin
 //SecondViewController.h

@@ -5,28 +5,27 @@
 //  Created by jiazy on 14/12/15.
 //  Copyright (c) 2014年 ronglian. All rights reserved.
 //
+#define KNOTIFICATION_DownloadFileCompletion   @"KNOTIFICATION_DownloadFileCompletion"
+
+
 
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioServices.h>
 #import "ECDeviceHeaders.h"
 #import "ECFileMessageBody.h"
 
-#define KNOTIFICATION_SendMessageCompletion       @"KNOTIFICATION_SendMessageCompletion"
-#define KNOTIFICATION_DownloadMessageCompletion   @"KNOTIFICATION_DownloadMessageCompletion"
 
-#define KErrorKey   @"kerrorkey"
-#define KMessageKey @"kmessagekey"
+
+
 
 
 @interface DeviceChatHelper : NSObject<ECProgressDelegate>
 
+
 +(DeviceChatHelper*)sharedInstance;
 
 -(ECMessage*)sendTextMessage:(NSString*)text to:(NSString*)to;
--(ECMessage*)sendMediaMessage:(ECFileMessageBody*)mediaBody to:(NSString*)to isMcm:(BOOL)ismcm;
-
--(ECMessage*)resendMessage:(ECMessage*)message isMcm:(BOOL)ismcm;
-
--(void)downloadMediaMessage:(ECMessage*)message andCompletion:(void(^)(ECError *error, ECMessage* message))completion;;
-
+-(ECMessage*)sendimageMessage:(NSString*)file displayName:(NSString *)displayname to:(NSString*)to;
+-(ECMessage *)sendFileMessage:(NSString *)file displayname:(NSString *)displayname to:(NSString *)to;
+-(void)downloadMediaMessage:(ECMessage*)message andCompletion:(void(^)(ECError *error, ECMessage* message))completion;
 @end

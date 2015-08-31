@@ -8,6 +8,7 @@
 
 #import "DeviceDelegateHelper.h"
 #import "ChatViewController.h"
+#import "DeviceChatHelper.h"
 @interface DeviceDelegateHelper()
 @property(atomic, assign) NSUInteger offlineCount;
 
@@ -83,12 +84,25 @@ NSLog:(@"收到%@的消息,属于%@会话", message.from, message.sessionId);
             ECImageMessageBody *msgBody = (ECImageMessageBody *)message.messageBody;
             NSLog(@"图片文件remote路径------%@",msgBody. remotePath);
             NSLog(@"缩略图片文件remote路径------%@",msgBody. thumbnailRemotePath);
+           
+                ECFileMessageBody *body = (ECFileMessageBody*)message.messageBody;
+                body.displayName = body.remotePath.lastPathComponent;
+            if (_imageArray== nil) {
+                _imageArray= [NSMutableArray array];
+            }
+            [_imageArray addObject:body.remotePath];
+            [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_DownloadMessageCompletion object:_imageArray];
+            
             break;
         }
             
         case MessageBodyType_File:{
-            ECFileMessageBody *msgBody = (ECFileMessageBody *)message.messageBody;
-            NSLog(@"文件remote路径------%@",msgBody. remotePath);
+            ECFileMessageBody *body = (ECFileMessageBody*)message.messageBody;
+            body.displayName = body.remotePath.lastPathComponent;
+            
+            [[DeviceChatHelper sharedInstance] downloadMediaMessage:message andCompletion:nil];           
+            
+//            [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_DownloadFileCompletion object:_fileArray];
             break;
         }
         default:

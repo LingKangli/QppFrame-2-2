@@ -74,7 +74,8 @@
             break;
         case MessageShowTypeImgVoice:
         case MessageShowTypeImgVoiceByUIIMG:
-        case MessageShowTypeMultChatImg:{
+        case MessageShowTypeMultChatImg:
+        case MessageShowTypeImageAndVoice:{
             CGFloat contentX = CGRectGetMaxX(_iconF) + kMargin;
             CGFloat contentY = iconY;
             CGSize contentSize =  CGSizeMake(kImgMarginW, kImgMarginH);

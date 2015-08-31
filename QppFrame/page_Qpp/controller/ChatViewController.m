@@ -19,17 +19,16 @@
 //#import "Command.h"
 #import "MoveButton.h"
 #import "KeyBoradView.h"
-
+#import "KeyBoradContentView.h"
 #import "MultChatObj.h"
 #import "ECDeviceHeaders.h" 
 #import "DeviceChatHelper.h"
 #import "DeviceDelegateHelper.h"
-
+#import "ZipArchive.h"
 #define ContentCGRect CGRectMake(0, titleY+titleHeight, UIScreenWidth, UIScreenHeight-titleHeight)
 #define  kUTTypeImage @".png"
 
 @implementation ChatViewController
-
 @synthesize backBtn = _backBtn;
 @synthesize titleValue = _titleValue;
 //@synthesize block;
@@ -70,6 +69,8 @@
 {
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableView:) name:KNOTIFICATION_onMesssageChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadMediaAttachFileCompletion:) name:KNOTIFICATION_DownloadMessageCompletion object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadFileCompletion:) name:KNOTIFICATION_DownloadFileCompletion object:nil];
     NSMutableArray *mArray =[NSMutableArray array];
     mArray = [DeviceDelegateHelper sharedInstance].receiveArray;
     for (NSString *str in mArray) {
@@ -386,7 +387,7 @@
         [alert show];
         return;
     }
-    NSString * to =@"88750900000045";
+    NSString * to =@"88750900000016";
     //loginInfo.username = @"88750900000016";
     //loginInfo.username = @"88750900000045";
     ECMessage* message = [[DeviceChatHelper sharedInstance] sendTextMessage:textString to:to];
@@ -431,6 +432,25 @@
 
 
 //img by add
+-(void)addReceiveMessageWithImg:(NSData *)data time:(NSString *)time
+{
+    MessageFrame *mf = [[MessageFrame alloc] init];
+    Message *msg = [[Message alloc] init];
+    //    msg.content =content;
+    //    msg.content = @"biaoQing1.png";
+    msg.imageData = [data copy];
+    msg.time = time;
+    msg.icon = @"1.jpg";
+    msg.type = MessageTypeOther;
+    msg.showType = MessageShowTypeData;
+    //    msg.voicePath = voicePath;
+    msg.isCurrentSend = YES; //连网测试
+    mf.message = msg;
+    NSLog(@"message is :%@",mf.message.content);
+    [_allMessagesFrame addObject:mf];
+    NSLog(@"mf:%@",_allMessagesFrame);
+
+}
 - (void)addMessageWithImg:(NSString *)content time:(NSString *)time{
     
     NSLog(@"test content:%@",content);
@@ -450,6 +470,26 @@
 }
 
 //voiceImgMsg by add
+- (void)addReceiveMessageWithImg:(NSString *)content andVoice:(NSURL*)voicePath time:(NSString *)time
+{
+    MessageFrame *mf = [[MessageFrame alloc] init];
+    Message *msg = [[Message alloc] init];
+    msg.content =content;
+    //    msg.content = @"biaoQing1.png";
+    
+    
+    msg.time = time;
+    msg.icon = @"1.jpg";
+    msg.type = MessageTypeOther;
+    msg.showType = MessageShowTypeImageAndVoice;
+    msg.voicePath = voicePath;
+    msg.isCurrentSend = YES; //连网测试
+    mf.message = msg;
+    NSLog(@"message is :%@",mf.message.content);
+    [_allMessagesFrame addObject:mf];
+    NSLog(@"mf:%@",_allMessagesFrame);
+
+}
 - (void)addMessageWithImg:(NSString *)content andVoice:(NSURL*)voicePath time:(NSString *)time{
     
     NSLog(@"test content:%@",content);
@@ -473,6 +513,7 @@
 //    NSLog(@"test content:%@",content);
     MessageFrame *mf = [[MessageFrame alloc] init];
     Message *msg = [[Message alloc] init];
+    
     msg.image = img;
     msg.time = time;
     msg.icon = @"1.jpg";
@@ -695,12 +736,22 @@
     
     NSLog(@"comehere : %@",filePath2);
     NSString *content =filePath2;
+    NSBundle *mainBundle = [NSBundle mainBundle];
     
+    //    用对象mainBundle获取图片路径
+    
+    NSString *imagePath = [mainBundle pathForResource:content ofType:nil];
+    NSLog(@"图片的路径%@",imagePath);
+    
+    NSString * to =@"88750900000016";
+    //loginInfo.username = @"88750900000016";
+    //loginInfo.username = @"88750900000045";
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
     NSDate *date = [NSDate date];
     fmt.dateFormat = @"MM-dd"; // @"yyyy-MM-dd HH:mm:ss"
     NSString *time = [fmt stringFromDate:date];
     [self addMessageWithImg:content time:time];
+    [[DeviceChatHelper sharedInstance] sendimageMessage:imagePath displayName:content to:to];
     // 2、刷新表格
     [chatTableView reloadData];
     // 3、滚动至当前行
@@ -714,12 +765,33 @@
 
     if (dataType == DataTypeImg) {
         
+        
         NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
         NSDate *date = [NSDate date];
+        
         fmt.dateFormat = @"MM-dd"; // @"yyyy-MM-dd HH:mm:ss"
         NSString *time = [fmt stringFromDate:date];
-
+        NSString * to =@"88750900000016";
+        //先把图片转成NSData
+     
+        
+        //图片保存的路径
+        //这里将图片放在沙盒的documents文件夹中
+        NSString * DocumentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+        
+        //文件管理器
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        //把刚刚图片转换的data对象拷贝至沙盒中 并保存为image.png
+        [fileManager createDirectoryAtPath:DocumentsPath withIntermediateDirectories:YES attributes:nil error:nil];
+        [fileManager createFileAtPath:[DocumentsPath stringByAppendingString:@"/image.png"] contents:data attributes:nil];
+        
+        //得到选择后沙盒中图片的完整路径
+        _filePath = [[NSString alloc]initWithFormat:@"%@%@",DocumentsPath,  @"/image.png"];
+        [[DeviceChatHelper sharedInstance] sendimageMessage:_filePath displayName:nil to:to];
+        NSLog(@"图片路径%@",_filePath);
         [self addMessageWithData:data time:time dataType:dataType];
+        
         // 2、刷新表格
         [chatTableView reloadData];
         // 3、滚动至当前行
@@ -733,6 +805,8 @@
 
 
 //delegate
+//发送图片和声音
+#pragma mark 发送图片和声音
 -(void)keyBoradPic:(NSString *)filePath andVoicePath:(NSURL *)voicePath{
 
     NSLog(@"comehere : %@",filePath);
@@ -740,12 +814,54 @@
     
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
     NSDate *date = [NSDate date];
-    fmt.dateFormat = @"MM-dd"; // @"yyyy-MM-dd HH:mm:ss"
+    fmt.dateFormat = @"yyyyMMddHHmmss"; // @"yyyy-MM-dd HH:mm:ss"
     NSString *time = [fmt stringFromDate:date];
+    NSBundle *mainBundle = [NSBundle mainBundle];
+    
+    //    用对象mainBundle获取图片路径
+    
+    NSString *imagePath = [mainBundle pathForResource:content ofType:nil];
+    NSLog(@"图片的路径%@",imagePath);
+    NSLog(@"声音的路径%@",voicePath);
+    //把voicePath 转成str
+    NSString *str = [[voicePath absoluteString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSMutableString *voiceStr = [NSMutableString stringWithString:str];
+    [voiceStr deleteCharactersInRange:NSMakeRange(0, voiceStr.length - 30)];
+    NSLog(@"%@",voiceStr);
+    NSFileManager *fileManager = [[NSFileManager alloc]init];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docspath = [paths objectAtIndex:0];
+    paths=NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachpath = [paths objectAtIndex:0];
+    
+        //写入imageData
+        NSString *imageDataPath=[NSString stringWithFormat:@"%@/%@.png",docspath,content];
+        [fileManager fileExistsAtPath:imageDataPath];
+        NSLog(@"%@",imageDataPath);
+        NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
+        [imageData writeToFile:imageDataPath atomically:YES];
+    
+    
+        
+    //创建压缩文件
+    NSString *zipFile = [docspath stringByAppendingPathComponent:@"data.zip"];
+    NSString *voiceData = [cachpath stringByAppendingString:voiceStr];
+    ZipArchive *za =[[ZipArchive alloc]init];
+    [za CreateZipFile2:zipFile];
+    [za addFileToZip:imagePath newname:content];
+    [za addFileToZip:voiceData newname:voiceStr];
+    [za CloseZipFile2];
+    NSLog(@"压缩包----》%@",zipFile);
+    NSString *to=@"88750900000016";
+    [[DeviceChatHelper sharedInstance] sendFileMessage:zipFile displayname:nil to:to];
+    
+    
+   
 //    [self addMessageWithImg:content time:time];
     
+    
 //    - (void)addMessageWithImg:(NSString *)content andVoice:(NSURL*)voicePath time:(NSString *)time{
-
+    
     [self addMessageWithImg:filePath andVoice:voicePath time:time];
     // 2、刷新表格
     [chatTableView reloadData];
@@ -761,6 +877,7 @@
 
 }
 
+
 -(void)keyBoradPick:(NSString *)filePath andVoicePath:(NSURL *)voicePath{
     
     NSLog(@"comehere : %@",filePath);
@@ -770,6 +887,8 @@
     NSDate *date = [NSDate date];
     fmt.dateFormat = @"MM-dd"; // @"yyyy-MM-dd HH:mm:ss"
     NSString *time = [fmt stringFromDate:date];
+   
+
     //    [self addMessageWithImg:content time:time];
     
     //    - (void)addMessageWithImg:(NSString *)content andVoice:(NSURL*)voicePath time:(NSString *)time{
@@ -891,8 +1010,10 @@
 //    [player play];
     
 }
+//显示收到的文字
+
 -(void)refreshTableView:(NSNotification*)notification{
-    
+   
     NSMutableArray *mArray =[NSMutableArray array];
     mArray = [DeviceDelegateHelper sharedInstance].onReceiveArray;
     for (NSString *str in mArray) {
@@ -909,6 +1030,61 @@
     }
     [mArray removeAllObjects];
 }
+
+//显示收到图片
+-(void)downloadMediaAttachFileCompletion:(NSNotification *)notification
+{
+    NSMutableArray *mArray =[NSMutableArray array];
+    mArray = [DeviceDelegateHelper sharedInstance].imageArray;
+    for (NSString *str in mArray) {
+       
+        NSLog(@"图片地址%@",str);
+        NSData* imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:str]];
+       
+            
+        
+                       
+        [self addReceiveMessageWithImg:imageData time:nil];
+        // 2、刷新表格
+        [chatTableView reloadData];
+        
+        // 3、滚动至当前行
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessagesFrame.count - 1 inSection:0];
+        [chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        // 4、清空文本框内容
+        _keyBorad.sendMessageField.text = nil;
+        
+    }
+                       
+    [mArray removeAllObjects];
+
+    
+    NSLog(@"收到图片");
+    
+}
+-(void)downloadFileCompletion:(NSNotification *)notification
+{
+   
+    NSString *imagePath = notification.userInfo[@"image"];
+    NSString *voicePath = notification.userInfo[@"voice"];
+    NSURL*voiceUrl = [NSURL URLWithString:voicePath];
+    
+    [self addReceiveMessageWithImg:imagePath andVoice:voiceUrl time:nil];
+    
+        // 2、刷新表格
+        [chatTableView reloadData];
+        
+        // 3、滚动至当前行
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessagesFrame.count - 1 inSection:0];
+        [chatTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        // 4、清空文本框内容
+        _keyBorad.sendMessageField.text = nil;
+        
+    }
+    
+
+    
+    
 
 
 
